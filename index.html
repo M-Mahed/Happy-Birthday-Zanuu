@@ -1,7 +1,5 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -354,11 +352,7 @@
             transition: transform 0.3s ease;
             cursor: pointer;
             user-select: none;
-        }
-        
-        .character img {
-            width: 120px;
-            height: auto;
+            font-size: 4rem;
             filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
         }
         
@@ -489,9 +483,8 @@
             width: 130px;
         }
         
-        .zodiac-sign img {
-            width: 80px;
-            height: 80px;
+        .zodiac-sign .emoji {
+            font-size: 2.5rem;
             margin-bottom: 10px;
         }
         
@@ -609,8 +602,8 @@
                 font-size: 0.95rem;
             }
             
-            .character img {
-                width: 90px;
+            .character {
+                font-size: 3rem;
             }
             
             .character.boy {
@@ -661,8 +654,8 @@
                 font-size: 0.8rem;
             }
             
-            .character img {
-                width: 70px;
+            .character {
+                font-size: 2.5rem;
             }
             
             .zodiac-container {
@@ -731,13 +724,8 @@
         <div id="message-box" class="message-box"></div>
         
         <!-- Virtual Characters -->
-        <div class="character boy" id="character-boy">
-            <img src="https://i.imgur.com/5dWwzGm.png" alt="Boy Character">
-        </div>
-        
-        <div class="character girl" id="character-girl">
-            <img src="https://i.imgur.com/s8XeNk8.png" alt="Girl Character">
-        </div>
+        <div class="character boy waving" id="character-boy">👦</div>
+        <div class="character girl waving" id="character-girl">👧</div>
         
         <!-- Music Control -->
         <div id="music-control">🎵</div>
@@ -822,7 +810,7 @@
                 
                 <div class="zodiac-container">
                     <div class="zodiac-sign">
-                        <img src="https://i.imgur.com/0eZcH4S.png" alt="Pisces">
+                        <div class="emoji">♓</div>
                         <h3>Pisces</h3>
                         <p>March 4</p>
                     </div>
@@ -830,7 +818,7 @@
                     <div class="emoji">❤️</div>
                     
                     <div class="zodiac-sign">
-                        <img src="https://i.imgur.com/3GQ3q2n.png" alt="Leo">
+                        <div class="emoji">♌</div>
                         <h3>Leo</h3>
                         <p>August 11</p>
                     </div>
