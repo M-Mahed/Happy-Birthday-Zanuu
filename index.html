@@ -39,7 +39,6 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            opacity: 0.7;
         }
         
         .step {
@@ -67,36 +66,16 @@
         }
         
         .content-box {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.7); /* Original blurry background */
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(165, 93, 144, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 30px;
             max-width: 800px;
             width: 90%;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.5);
             position: relative;
             overflow: hidden;
-        }
-        
-        .content-box::before {
-            content: "";
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 2px solid rgba(236, 72, 153, 0.2);
-            border-radius: 25px;
-            z-index: -1;
-            animation: pulseBorder 3s infinite;
-        }
-        
-        @keyframes pulseBorder {
-            0% { opacity: 0.2; }
-            50% { opacity: 0.5; }
-            100% { opacity: 0.2; }
         }
         
         .emoji {
@@ -153,17 +132,6 @@
             z-index: 5;
         }
         
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
-            z-index: -1;
-        }
-        
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(236, 72, 153, 0.5);
@@ -180,7 +148,6 @@
             margin: 20px 0;
             width: 100%;
             height: 300px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         #candles-container {
@@ -275,42 +242,38 @@
             box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
         }
         
+        /* Compliments container - original square boxes with scrolling */
         #compliments-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            grid-gap: 20px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            grid-gap: 15px;
+            padding: 15px;
             width: 100%;
+            height: 300px; /* Fixed height for scrolling */
             margin: 20px 0;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
         }
         
         .floating-compliment {
             background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(5px);
-            border-radius: 15px;
-            padding: 20px 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            font-size: 1rem;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 0.95rem;
             color: #5a2a4e;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            animation: hover 3s infinite alternate ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            border: 1px solid rgba(236, 72, 153, 0.2);
+            min-height: 80px;
         }
         
         .floating-compliment:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-        
-        @keyframes hover {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-8px); }
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
         }
         
         .message-text {
@@ -346,41 +309,6 @@
             color: #b33971;
             text-align: right;
             margin-top: 20px;
-        }
-        
-        .floating-hearts {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2;
-        }
-        
-        .heart {
-            position: absolute;
-            color: #ff6b9c;
-            font-size: 24px;
-            opacity: 0;
-            animation: floatHeart 8s linear infinite;
-        }
-        
-        @keyframes floatHeart {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
         }
         
         .progress-container {
@@ -428,14 +356,16 @@
             }
             
             #compliments-container {
+                height: 250px;
                 grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-                grid-gap: 15px;
-                padding: 15px;
+                grid-gap: 12px;
+                padding: 10px;
             }
             
             .floating-compliment {
-                padding: 15px 10px;
-                font-size: 0.95rem;
+                padding: 12px;
+                font-size: 0.9rem;
+                min-height: 70px;
             }
             
             .btn {
@@ -462,14 +392,16 @@
             }
             
             #compliments-container {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-                grid-gap: 12px;
-                padding: 10px;
+                height: 200px;
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+                grid-gap: 10px;
+                padding: 8px;
             }
             
             .floating-compliment {
-                padding: 12px 8px;
-                font-size: 0.85rem;
+                padding: 10px 8px;
+                font-size: 0.8rem;
+                min-height: 60px;
             }
             
             .btn {
@@ -482,7 +414,6 @@
 <body>
     <div id="app">
         <div id="canvas-container"></div>
-        <div class="floating-hearts" id="floating-hearts"></div>
         
         <div class="progress-container">
             <div class="progress-bar" id="progress-bar"></div>
@@ -514,7 +445,7 @@
                 <h1>My Precious Zanuu</h1>
                 <p>So many reasons why I adore you. Here are just a few:</p>
                 
-                <div id="complaints-container">
+                <div id="compliments-container">
                     <div class="floating-compliment">Your beautiful smile 😊</div>
                     <div class="floating-compliment">Your kind heart ❤️</div>
                     <div class="floating-compliment">Your infectious laugh 😄</div>
@@ -531,6 +462,14 @@
                     <div class="floating-compliment">You are simply perfect 👑</div>
                     <div class="floating-compliment">Your beautiful eyes 👀</div>
                     <div class="floating-compliment">Your gentle touch ✋</div>
+                    <div class="floating-compliment">Your positive energy 🌟</div>
+                    <div class="floating-compliment">Your caring nature 🤗</div>
+                    <div class="floating-compliment">Your amazing cooking 🍳</div>
+                    <div class="floating-compliment">Your intelligence 🧠</div>
+                    <div class="floating-compliment">Your passion for life 🔥</div>
+                    <div class="floating-compliment">Your beautiful soul 💫</div>
+                    <div class="floating-compliment">Your wise advice 💡</div>
+                    <div class="floating-compliment">Your warm hugs 🤗</div>
                 </div>
                 
                 <button class="btn" id="next-btn-3">Our Special Sky 🌌</button>
@@ -601,25 +540,7 @@
     </div>
 
     <script>
-        // Create floating hearts effect
-        function createFloatingHearts() {
-            const container = document.getElementById('floating-hearts');
-            const heartCount = 30;
-            
-            for (let i = 0; i < heartCount; i++) {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.innerHTML = '❤';
-                heart.style.left = `${Math.random() * 100}%`;
-                heart.style.animationDuration = `${5 + Math.random() * 10}s`;
-                heart.style.animationDelay = `${Math.random() * 5}s`;
-                heart.style.fontSize = `${20 + Math.random() * 30}px`;
-                heart.style.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
-                container.appendChild(heart);
-            }
-        }
-        
-        // Three.js Heart Background
+        // Three.js Heart Background (original)
         const container = document.getElementById('canvas-container');
         const renderer = new THREE.WebGLRenderer({
             antialias: true,
@@ -730,6 +651,140 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
+        // Star Map Logic
+        let starMapScene, starMapCamera, starMapRenderer;
+        let isDragging = false;
+        let previousMousePosition = {
+            x: 0,
+            y: 0
+        };
+        const starCount = 500;
+
+        function initStarMap() {
+            const starMapContainer = document.getElementById('star-map-container');
+            const starMapCanvas = document.getElementById('star-map-canvas');
+
+            const width = starMapContainer.offsetWidth;
+            const height = 300;
+
+            starMapRenderer = new THREE.WebGLRenderer({
+                canvas: starMapCanvas,
+                antialias: true,
+                alpha: true
+            });
+            starMapRenderer.setSize(width, height);
+
+            starMapScene = new THREE.Scene();
+            starMapCamera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            starMapCamera.position.z = 5;
+
+            // Generate a starry night sky
+            const starGeometry = new THREE.BufferGeometry();
+            const starVertices = [];
+            for (let i = 0; i < starCount; i++) {
+                const x = (Math.random() - 0.5) * 100;
+                const y = (Math.random() - 0.5) * 100;
+                const z = (Math.random() - 0.5) * 100;
+                starVertices.push(x, y, z);
+            }
+            starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+            const starMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 0.1,
+                sizeAttenuation: true
+            });
+            const starField = new THREE.Points(starGeometry, starMaterial);
+            starMapScene.add(starField);
+
+            // Create a constellation line to represent a connection
+            const lineMaterial = new THREE.LineBasicMaterial({
+                color: 0xff69b4,
+                linewidth: 3,
+                opacity: 0.8,
+                transparent: true
+            });
+            const points = [];
+            points.push(new THREE.Vector3(-2, 1, -1));
+            points.push(new THREE.Vector3(0, 2, 0));
+            points.push(new THREE.Vector3(2, 1, 1));
+            points.push(new THREE.Vector3(1, -2, 2));
+            points.push(new THREE.Vector3(-1, -1, -2));
+            const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+            const line = new THREE.Line(lineGeometry, lineMaterial);
+            starMapScene.add(line);
+
+            // Animation loop for star map
+            const animateStarMap = () => {
+                requestAnimationFrame(animateStarMap);
+                if (!isDragging) {
+                    starMapScene.rotation.y += 0.001;
+                }
+                starMapRenderer.render(starMapScene, starMapCamera);
+            };
+            animateStarMap();
+
+            // Mouse interaction for star map
+            starMapCanvas.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousMousePosition = {
+                    x: e.clientX,
+                    y: e.clientY
+                };
+            });
+            starMapCanvas.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+            starMapCanvas.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const deltaMove = {
+                        x: e.clientX - previousMousePosition.x,
+                        y: e.clientY - previousMousePosition.y
+                    };
+                    starMapScene.rotation.y += deltaMove.x * 0.005;
+                    starMapScene.rotation.x += deltaMove.y * 0.005;
+                    previousMousePosition = {
+                        x: e.clientX,
+                        y: e.clientY
+                    };
+                }
+            });
+            
+            // Touch events for mobile
+            starMapCanvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                isDragging = true;
+                previousMousePosition = {
+                    x: e.touches[0].clientX,
+                    y: e.touches[0].clientY
+                };
+            });
+            starMapCanvas.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+            starMapCanvas.addEventListener('touchmove', (e) => {
+                if (isDragging) {
+                    const deltaMove = {
+                        x: e.touches[0].clientX - previousMousePosition.x,
+                        y: e.touches[0].clientY - previousMousePosition.y
+                    };
+                    starMapScene.rotation.y += deltaMove.x * 0.005;
+                    starMapScene.rotation.x += deltaMove.y * 0.005;
+                    previousMousePosition = {
+                        x: e.touches[0].clientX,
+                        y: e.touches[0].clientY
+                    };
+                    e.preventDefault();
+                }
+            });
+            
+            window.addEventListener('resize', () => {
+                const newWidth = starMapContainer.offsetWidth;
+                starMapCamera.aspect = newWidth / height;
+                starMapCamera.updateProjectionMatrix();
+                starMapRenderer.setSize(newWidth, height);
+            });
+        }
+
         // Create candles
         function createCandles() {
             const cake = document.querySelector('.cake');
@@ -754,8 +809,78 @@
         }
         createCandles();
         
-        // Create floating hearts
-        createFloatingHearts();
+        // Candle blowing logic
+        let audioContext, analyser, microphone, stream;
+        let isBlowing = false;
+        const blowThreshold = 20;
+        const candles = document.querySelectorAll('.flame');
+        
+        function blowOutCandles() {
+            isBlowing = true;
+            document.getElementById('blow-message').textContent = "You blew out the candles! 🎉";
+            candles.forEach(flame => {
+                flame.classList.add('out');
+            });
+
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+
+            setTimeout(() => {
+                document.getElementById('next-btn-5').classList.remove('hidden');
+                document.getElementById('start-blow-btn').classList.add('hidden');
+                document.getElementById('manual-blow-btn').classList.add('hidden');
+            }, 1000);
+        }
+
+        function startBlowingLogic() {
+            const blowMessage = document.getElementById('blow-message');
+            const blowLevelBar = document.getElementById('blow-level');
+
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                blowMessage.textContent = "Microphone access is not supported on this browser.";
+                return;
+            }
+
+            navigator.mediaDevices.getUserMedia({
+                    audio: true
+                })
+                .then(function(s) {
+                    stream = s;
+                    audioContext = new(window.AudioContext || window.webkitAudioContext)();
+                    analyser = audioContext.createAnalyser();
+                    microphone = audioContext.createMediaStreamSource(stream);
+                    analyser.minDecibels = -90;
+                    analyser.maxDecibels = -10;
+                    analyser.smoothingTimeConstant = 0.85;
+                    microphone.connect(analyser);
+
+                    const dataArray = new Uint8Array(analyser.fftSize);
+
+                    blowMessage.textContent = "Permission granted! Blow now! 🌬️";
+
+                    const checkBlow = () => {
+                        analyser.getByteFrequencyData(dataArray);
+                        const volume = dataArray.reduce((acc, val) => acc + val, 0) / dataArray.length;
+
+                        // Update the visual blow meter
+                        blowLevelBar.style.width = `${Math.min(volume, 255) / 2.55}%`;
+
+                        if (volume > blowThreshold && !isBlowing) {
+                            blowOutCandles();
+                        }
+
+                        if (!isBlowing) {
+                            requestAnimationFrame(checkBlow);
+                        }
+                    };
+                    checkBlow();
+                })
+                .catch(function(err) {
+                    blowMessage.textContent = "Microphone access denied. Please allow permission to blow out the candles.";
+                    console.error("Error accessing microphone:", err);
+                });
+        }
 
         // Step Navigation
         let currentStep = 1;
@@ -773,10 +898,29 @@
             document.getElementById(`step${stepNumber}`).classList.add('active');
             updateProgressBar();
             
-            // Add special effects for step 6
+            if (stepNumber === 4 && !starMapScene) {
+                initStarMap();
+            }
+            
+            if (stepNumber === 5) {
+                isBlowing = false;
+                candles.forEach(flame => flame.classList.remove('out'));
+                document.getElementById('blow-level').style.width = '0%';
+                document.getElementById('blow-message').textContent = 'Blow into your microphone to extinguish the candles!';
+                document.getElementById('next-btn-5').classList.add('hidden');
+                document.getElementById('start-blow-btn').classList.remove('hidden');
+                document.getElementById('manual-blow-btn').classList.remove('hidden');
+                
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    stream = null;
+                }
+            }
+            
+            // Special effects for step 6
             if(stepNumber === 6) {
                 confetti({
-                    particleCount: 50,
+                    particleCount: 30,
                     spread: 70,
                     origin: { y: 0.6 },
                     colors: ['#ff6b9c', '#ff8eb3', '#ffc2d6']
@@ -810,6 +954,16 @@
             showStep(currentStep);
         });
         
+        // Candle blowing buttons
+        document.getElementById('start-blow-btn').addEventListener('click', () => {
+            document.getElementById('start-blow-btn').disabled = true;
+            startBlowingLogic();
+        });
+        
+        document.getElementById('manual-blow-btn').addEventListener('click', () => {
+            blowOutCandles();
+        });
+        
         // Confetti button
         document.getElementById('confetti-btn').addEventListener('click', () => {
             // Heart-shaped confetti
@@ -839,15 +993,6 @@
                     colors: ['#ff6b9c', '#ff8eb3']
                 });
             }, 300);
-            
-            // Floating hearts animation
-            const hearts = document.querySelectorAll('.heart');
-            hearts.forEach(heart => {
-                heart.style.animation = 'none';
-                setTimeout(() => {
-                    heart.style.animation = '';
-                }, 10);
-            });
         });
         
         // Initialize
