@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Moi Zanuuu ❤️</title>
-    <!-- CSS and JS libraries for styling, animation, and effects -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
@@ -190,22 +189,13 @@
             visibility: visible;
         }
 
-        /* Birthday list item styling */
-        .birthday-list-item {
+        /* Floating compliments styles */
+        .floating-compliment {
+            position: absolute;
             background: rgba(255, 255, 255, 0.7);
-            padding: 12px 20px;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            text-align: left;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .birthday-list-item:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
         /* Blow out candles section styles */
@@ -310,7 +300,6 @@
         <div id="message-box" class="message-box"></div>
 
         <div id="content">
-            <!-- Step 1: Initial Reveal -->
             <div class="step active" id="step1">
                 <div class="emoji heart-beat">❤️</div>
                 <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gradient animated-title">Hey Zanuuu</h1>
@@ -318,7 +307,6 @@
                 <button class="btn" id="start-btn">Let's Begin 🎉</button>
             </div>
 
-            <!-- Step 2: Birthday Message -->
             <div class="step" id="step2">
                 <div class="emoji">🎂</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Happy Birthday!</h2>
@@ -329,28 +317,17 @@
                 <button class="btn" id="next-btn-2">A few words for you 💖</button>
             </div>
 
-            <!-- Step 3: Three Things About You -->
             <div class="step" id="step3">
                 <div class="emoji">👑</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Some words for moi Zanuu</h2>
                 <p class="text-base text-gray-700 mb-8 md:text-lg">
-                    Just a few of the countless reasons why you are so special to me.
+                    A few of the countless reasons why you are so special to me...
                 </p>
-                <div class="w-full flex flex-col items-center">
-                    <div class="birthday-list-item">
-                        <span class="font-semibold text-pink-600">Your kind heart:</span> You care so deeply for everyone around you, and it inspires me every single day.
-                    </div>
-                    <div class="birthday-list-item">
-                        <span class="font-semibold text-pink-600">Your brilliant mind:</span> I love the way you see the world and the way you think about things.
-                    </div>
-                    <div class="birthday-list-item">
-                        <span class="font-semibold text-pink-600">Your infectious laugh:</span> Hearing you laugh is one of my favorite sounds in the entire world.
-                    </div>
+                <div id="compliments-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; pointer-events: none;">
                 </div>
                 <button class="btn" id="next-btn-3">A Glimpse into the Sky 🔭</button>
             </div>
 
-            <!-- Step 4: Star Map -->
             <div class="step" id="step4">
                 <div class="emoji">🌌</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">The Stars of Our Beginning</h2>
@@ -366,7 +343,6 @@
                 <button class="btn" id="next-btn-4">Make a Wish 🎁</button>
             </div>
 
-            <!-- Step 5: Blow Out the Candles -->
             <div class="step" id="step5">
                 <div class="emoji">🕯️</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Make a Wish!</h2>
@@ -376,8 +352,7 @@
                 <div id="candles-container">
                     <div class="cake">
                         <div class="icing"></div>
-                        <!-- Candles will be positioned here -->
-                    </div>
+                        </div>
                 </div>
                 <div id="blow-meter">
                     <div id="blow-level"></div>
@@ -385,14 +360,12 @@
                 <p id="blow-message" class="mt-4 text-gray-700 text-sm italic"></p>
                 <div class="flex flex-col items-center w-full">
                     <button class="btn w-full max-w-sm" id="start-blow-btn">Start Blowing 🎙️</button>
-                    <!-- Small button to manually blow out candles -->
                     <button class="btn btn-small" id="manual-blow-btn">Click to Blow</button>
                     <button class="btn hidden w-full max-w-sm" id="next-btn-5">One Last Thing 🙏</button>
                 </div>
             </div>
 
 
-            <!-- Step 6: Final Wish -->
             <div class="step" id="step6">
                 <div class="emoji">🥳</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Birthday Wish For You</h2>
@@ -768,6 +741,66 @@
             const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
             document.getElementById('progress-bar').style.width = `${progress}%`;
         }
+        
+        // Function to create and animate the floating compliments
+        function createFloatingCompliments() {
+            const compliments = [
+                "Your kind heart ❤️",
+                "Your infectious laugh 😄",
+                "Your brilliant mind 🧠",
+                "Your beautiful smile 😊",
+                "The way you make me feel safe 🤗",
+                "Your incredible strength 💪",
+                "The way you always support me 🙌",
+                "Your unique view of the world 🌍",
+                "Your unwavering love for me 🥰",
+                "Your sense of humor 😂"
+                // Add more compliments here!
+            ];
+
+            const container = document.getElementById('compliments-container');
+            container.innerHTML = ''; // Clear previous ones if any
+
+            compliments.forEach(complimentText => {
+                const complimentBox = document.createElement('div');
+                complimentBox.className = 'floating-compliment';
+                complimentBox.textContent = complimentText;
+
+                // Style for square boxes and initial positioning
+                const size = '80px'; // Adjust size as needed
+                complimentBox.style.width = size;
+                complimentBox.style.height = size;
+                complimentBox.style.display = 'flex';
+                complimentBox.style.justifyContent = 'center';
+                complimentBox.style.alignItems = 'center';
+                complimentBox.style.fontSize = '0.7rem';
+                complimentBox.style.borderRadius = '10px';
+                complimentBox.style.textAlign = 'center';
+                complimentBox.style.opacity = '0.8';
+                complimentBox.style.top = `${Math.random() * (window.innerHeight - parseInt(size))}px`;
+                complimentBox.style.left = `${Math.random() * (window.innerWidth - parseInt(size))}px`;
+
+                // Subtle hover animation using GSAP
+                const floatSpeed = 3; // Adjust speed as needed
+                const floatDistance = 5; // Adjust distance as needed
+                const initialDelay = Math.random() * 2; // Stagger start times
+
+                function hoverAnimation() {
+                    gsap.to(complimentBox, {
+                        y: `+=${floatDistance}`,
+                        duration: floatSpeed,
+                        ease: "sine.inOut",
+                        repeat: -1,
+                        yoyo: true,
+                        delay: initialDelay
+                    });
+                }
+                hoverAnimation();
+
+                container.appendChild(complimentBox);
+            });
+        }
+
 
         function showStep(stepNumber) {
             document.querySelectorAll('.step').forEach(step => {
@@ -776,11 +809,17 @@
             document.getElementById(`step${stepNumber}`).classList.add('active');
             updateProgressBar();
 
-            if (stepNumber === totalSteps) {
-                document.getElementById('confetti-btn').classList.add('animate-pulse');
+            if (stepNumber === 3) {
+                // Call the function to create the floating compliments
+                createFloatingCompliments();
             }
+
             if (stepNumber === 4 && !starMapScene) {
                 initStarMap();
+            }
+
+            if (stepNumber === totalSteps) {
+                document.getElementById('confetti-btn').classList.add('animate-pulse');
             }
         }
 
