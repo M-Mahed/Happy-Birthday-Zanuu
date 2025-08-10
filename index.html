@@ -44,7 +44,7 @@
             width: 90%;
             max-width: 800px;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.509);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -54,6 +54,7 @@
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
             display: none;
+            z-index: 50;
         }
 
         .step.active {
@@ -189,13 +190,47 @@
             visibility: visible;
         }
 
+        /* Floating compliments container */
+        #compliments-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-gap: 20px;
+            padding: 20px;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+
         /* Floating compliments styles */
         .floating-compliment {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-size: 0.8rem;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            animation: hover 3s infinite alternate ease-in-out;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes hover {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-10px);
+            }
         }
 
         /* Blow out candles section styles */
@@ -323,8 +358,8 @@
                 <p class="text-base text-gray-700 mb-8 md:text-lg">
                     A few of the countless reasons why you are so special to me...
                 </p>
-                <div id="compliments-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; pointer-events: none;">
-                </div>
+                <div id="compliments-container">
+                    </div>
                 <button class="btn" id="next-btn-3">A Glimpse into the Sky 🔭</button>
             </div>
 
@@ -742,9 +777,19 @@
             document.getElementById('progress-bar').style.width = `${progress}%`;
         }
         
-        // Function to create and animate the floating compliments
+        // Function to create and animate the floating compliments (Updated)
         function createFloatingCompliments() {
             const compliments = [
+                "Your kind heart ❤️",
+                "Your infectious laugh 😄",
+                "Your brilliant mind 🧠",
+                "Your beautiful smile 😊",
+                "The way you make me feel safe 🤗",
+                "Your incredible strength 💪",
+                "The way you always support me 🙌",
+                "Your unique view of the world 🌍",
+                "Your unwavering love for me 🥰",
+                "Your sense of humor 😂",
                 "Your kind heart ❤️",
                 "Your infectious laugh 😄",
                 "Your brilliant mind 🧠",
@@ -757,46 +802,40 @@
                 "Your sense of humor 😂"
                 // Add more compliments here!
             ];
-
+        
             const container = document.getElementById('compliments-container');
-            container.innerHTML = ''; // Clear previous ones if any
-
-            compliments.forEach(complimentText => {
+            container.innerHTML = ''; // Clear previous ones
+        
+            compliments.forEach((complimentText, index) => {
                 const complimentBox = document.createElement('div');
                 complimentBox.className = 'floating-compliment';
                 complimentBox.textContent = complimentText;
-
-                // Style for square boxes and initial positioning
-                const size = '80px'; // Adjust size as needed
-                complimentBox.style.width = size;
-                complimentBox.style.height = size;
-                complimentBox.style.display = 'flex';
-                complimentBox.style.justifyContent = 'center';
-                complimentBox.style.alignItems = 'center';
-                complimentBox.style.fontSize = '0.7rem';
-                complimentBox.style.borderRadius = '10px';
-                complimentBox.style.textAlign = 'center';
-                complimentBox.style.opacity = '0.8';
-                complimentBox.style.top = `${Math.random() * (window.innerHeight - parseInt(size))}px`;
-                complimentBox.style.left = `${Math.random() * (window.innerWidth - parseInt(size))}px`;
-
-                // Subtle hover animation using GSAP
-                const floatSpeed = 3; // Adjust speed as needed
-                const floatDistance = 5; // Adjust distance as needed
-                const initialDelay = Math.random() * 2; // Stagger start times
-
-                function hoverAnimation() {
-                    gsap.to(complimentBox, {
-                        y: `+=${floatDistance}`,
-                        duration: floatSpeed,
-                        ease: "sine.inOut",
-                        repeat: -1,
-                        yoyo: true,
-                        delay: initialDelay
-                    });
-                }
-                hoverAnimation();
-
+        
+                // Use GSAP for the animation
+                gsap.set(complimentBox, {
+                    scale: 0,
+                    opacity: 0,
+                    rotation: Math.random() * 360,
+                });
+        
+                gsap.to(complimentBox, {
+                    scale: 1,
+                    opacity: 0.8,
+                    duration: 1,
+                    delay: index * 0.1,
+                    ease: "power2.out",
+                });
+        
+                // Hover animation
+                gsap.to(complimentBox, {
+                    y: "-=10px",
+                    duration: 2 + Math.random() * 2,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut",
+                    delay: Math.random() * 2,
+                });
+        
                 container.appendChild(complimentBox);
             });
         }
