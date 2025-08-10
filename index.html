@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,16 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Moi Zanuuu ❤️</title>
-    <!-- Tailwind CSS for modern styling -->
+    <!-- CSS and JS libraries for styling, animation, and effects -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Three.js for the 3D hearts background -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- GSAP for animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <!-- Canvas Confetti for the celebration effect -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        /* General body styling */
         body {
             margin: 0;
             overflow: hidden;
@@ -44,7 +41,6 @@
             box-sizing: border-box;
         }
 
-        /* Step containers */
         .step {
             position: absolute;
             width: 90%;
@@ -69,7 +65,6 @@
             display: block;
         }
 
-        /* Styling for all buttons */
         .btn {
             background: linear-gradient(135deg, #ec4899, #f43f5e);
             color: white;
@@ -98,32 +93,13 @@
             transform: translateY(0);
         }
 
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.5);
-            border: none;
-            border-radius: 50%;
-            padding: 8px;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .back-btn:hover {
-            transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Text gradient effect */
         .text-gradient {
             background: linear-gradient(135deg, #ec4899, #f43f5e, #f59e0b);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-
+        
         .animated-title {
             animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
@@ -133,7 +109,6 @@
                 transform: scale(1);
                 text-shadow: 0 0 5px rgba(236, 72, 153, 0.3);
             }
-
             50% {
                 transform: scale(1.05);
                 text-shadow: 0 0 15px rgba(236, 72, 153, 0.6);
@@ -146,164 +121,175 @@
             display: inline-block;
         }
 
-        /* Styles for the love wall */
-        .love-wall-item {
-            background: #fff;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            margin-bottom: 15px;
-            text-align: left;
+        #progress-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 400px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            z-index: 100;
         }
 
-        .love-wall-item p {
-            font-style: italic;
-        }
-
-        .love-wall-item small {
-            display: block;
-            margin-top: 5px;
-            text-align: right;
-            color: #9ca3af;
-            font-size: 0.8rem;
-        }
-
-        /* Floating Love Boxes */
-        #love-boxes-container {
-            position: relative;
-            width: 100%;
-            max-height: 400px;
-            overflow-y: auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            padding: 10px;
-        }
-
-        .love-box {
-            background: linear-gradient(135deg, #ffdeeb, #ffebee);
-            border-radius: 15px;
-            padding: 15px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #4b5563;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            transform: translateY(0);
-            animation: float 5s ease-in-out infinite;
-            text-align: center;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0px) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-8px) rotate(1deg);
-            }
-
-            100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-        }
-
-        /* Image Gallery styles */
-        #gallery-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-
-        .gallery-item {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            transform: scale(1) rotate(0deg);
-            transition: transform 0.3s ease-in-out;
-            cursor: pointer;
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.05) rotate(5deg);
-        }
-
-        .gallery-item img {
-            width: 100%;
+        #progress-bar {
             height: 100%;
-            object-fit: cover;
-            display: block;
+            width: 0%;
+            background: linear-gradient(90deg, #ec4899, #f43f5e);
+            border-radius: 3px;
+            transition: width 0.5s ease;
         }
 
-        .gallery-text {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 8px;
-            font-size: 0.8rem;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        .gallery-item:hover .gallery-text {
-            opacity: 1;
-        }
-
-        /* Mini-Game styles */
-        #game-canvas {
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            touch-action: none;
-            cursor: none;
-        }
-
-        #game-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: 500px;
-            margin-top: 10px;
-            font-weight: bold;
-            color: #4b5563;
-        }
-
-        #game-end-screen {
-            position: absolute;
+        #canvas-container {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: 1;
+        }
+        
+        /* Star map specific styles */
+        #star-map-canvas {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        /* Message box styles */
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease;
+        }
+        .message-box.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Birthday list item styling */
+        .birthday-list-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(5px);
-            z-index: 20;
-            border-radius: 15px;
-            display: none;
         }
+        
+        .birthday-list-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Blow out candles section styles */
+        #candles-container {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .cake {
+            background: #d89669;
+            width: 120px;
+            height: 60px;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+        }
+
+        .icing {
+            background: #fdf6e3;
+            width: 130px;
+            height: 10px;
+            position: absolute;
+            top: -10px;
+            left: -5px;
+            border-radius: 50%;
+            box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .candle {
+            position: absolute;
+            width: 8px;
+            height: 30px;
+            background: #fdf6e3;
+            border-radius: 2px;
+        }
+
+        .flame {
+            position: absolute;
+            top: -15px;
+            left: -1px;
+            width: 10px;
+            height: 20px;
+            background: linear-gradient(to top, #ffcc33, #e65200);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 0 10px 5px rgba(255, 153, 0, 0.7);
+            animation: flicker 1s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1, 1.1) translateY(0); opacity: 1; }
+            50% { transform: scale(1, 1) translateY(-2px); opacity: 0.9; }
+            100% { transform: scale(1, 1.1) translateY(0); opacity: 1; }
+        }
+        
+        .flame.out {
+            animation: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        #blow-meter {
+            height: 20px;
+            width: 100%;
+            max-width: 300px;
+            background: #ddd;
+            border-radius: 10px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        #blow-level {
+            height: 100%;
+            width: 0%;
+            background: #f43f5e;
+            border-radius: 10px;
+            transition: width 0.1s ease-out;
+        }
+
     </style>
 </head>
 
 <body>
     <div id="app">
         <div id="canvas-container"></div>
+
         <div id="progress-container">
             <div id="progress-bar"></div>
         </div>
-
+        
         <div id="message-box" class="message-box"></div>
 
         <div id="content">
@@ -317,54 +303,43 @@
 
             <!-- Step 2: Birthday Message -->
             <div class="step" id="step2">
-                <button class="back-btn" id="back-btn-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
                 <div class="emoji">🎂</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Happy Birthday!</h2>
                 <p class="text-base text-gray-700 mb-6 md:text-lg">
                     On your special day, I want you to know how amazing you are. Your smile brightens my world, your
                     laughter is my favorite melody, and your presence makes every moment magical.
                 </p>
-                <button class="btn" id="next-btn-2">Reasons I Love You 🥰</button>
+                <button class="btn" id="next-btn-2">Three Things About You 💖</button>
             </div>
 
-            <!-- Step 3: Floating Love Boxes -->
+            <!-- Step 3: Three Things About You -->
             <div class="step" id="step3">
-                <button class="back-btn" id="back-btn-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
-                <div class="emoji">💖</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Reasons I Love You</h2>
-                <p class="text-base text-gray-700 mb-6 md:text-lg">
-                    Just a few of the countless things I adore about you.
+                <div class="emoji">👑</div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Three Things About You</h2>
+                <p class="text-base text-gray-700 mb-8 md:text-lg">
+                    Just a few of the countless reasons why you are so special to me.
                 </p>
-                <div id="love-boxes-container"
-                    class="w-full bg-gradient-to-r from-pink-200 to-rose-200 rounded-xl p-4 md:p-8 mb-8">
-                    <!-- Love boxes will be added here by the script -->
+                <!-- This section has been updated to use a responsive grid layout -->
+                <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="birthday-list-item">
+                        <p><span class="font-semibold text-pink-600">Your kind heart:</span> You care so deeply for everyone around you, and it inspires me every single day.</p>
+                    </div>
+                    <div class="birthday-list-item">
+                        <p><span class="font-semibold text-pink-600">Your brilliant mind:</span> I love the way you see the world and the way you think about things.</p>
+                    </div>
+                    <div class="birthday-list-item">
+                        <p><span class="font-semibold text-pink-600">Your infectious laugh:</span> Hearing you laugh is one of my favorite sounds in the entire world.</p>
+                    </div>
                 </div>
                 <button class="btn" id="next-btn-3">A Glimpse into the Sky 🔭</button>
             </div>
 
-
             <!-- Step 4: Star Map -->
             <div class="step" id="step4">
-                <button class="back-btn" id="back-btn-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
                 <div class="emoji">🌌</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">The Stars of Our Beginning</h2>
                 <p class="text-base text-gray-700 mb-6 md:text-lg">
-                    This is what the night sky looked like on the day you came into my life. ✨
+                    This is what the night sky looked like on **June 10th**, the day you came into my life. ✨
                 </p>
                 <div id="star-map-container" class="w-full h-64 md:h-96 relative rounded-xl mb-4">
                     <canvas id="star-map-canvas" class="w-full h-full"></canvas>
@@ -372,161 +347,33 @@
                 <p class="text-sm text-gray-500 italic mt-2">
                     Click and drag to explore the sky!
                 </p>
-                <button class="btn" id="next-btn-4">Our Love Wall ❤️</button>
+                <button class="btn" id="next-btn-4">Make a Wish 🎁</button>
             </div>
 
-            <!-- Step 5: Collaborative Love Wall -->
+            <!-- Step 5: Blow Out the Candles -->
             <div class="step" id="step5">
-                <button class="back-btn" id="back-btn-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
-                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-gradient">Our Love Wall ❤️</h2>
-                <p class="text-base text-gray-700 mb-4 md:text-lg">
-                    Reasons you're incredible and our special moments. Let's add more! 😊
+                <div class="emoji">🕯️</div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Make a Wish!</h2>
+                <p class="text-base text-gray-700 mb-6 md:text-lg">
+                    Close your eyes, make a wish, and blow into your microphone to blow out the candles!
                 </p>
-                <div class="w-full bg-gradient-to-r from-pink-200 to-rose-200 rounded-xl p-4 md:p-8 mb-8">
-                    <div id="love-wall-container" class="w-full text-left max-h-48 overflow-y-auto mb-4">
-                        <!-- Love notes will be added here by the script -->
-                    </div>
-                    <div class="flex w-full items-center justify-center">
-                        <input type="text" id="love-note-input" placeholder="Add a note here..."
-                            class="flex-grow p-2 md:p-3 rounded-l-full border-none outline-none focus:ring-2 focus:ring-pink-400 text-gray-700">
-                        <button id="add-love-note-btn"
-                            class="bg-pink-500 text-white p-2 md:p-3 rounded-r-full font-bold transition-transform transform hover:scale-105">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                        </button>
+                <div id="candles-container">
+                    <div class="cake">
+                        <div class="icing"></div>
+                        <!-- Candles will be positioned here -->
                     </div>
                 </div>
-                <button class="btn" id="next-btn-5">Our Future 🎁</button>
+                <div id="blow-meter">
+                    <div id="blow-level"></div>
+                </div>
+                <p id="blow-message" class="mt-4 text-gray-700 text-sm italic"></p>
+                <button class="btn" id="start-blow-btn">Start Blowing 🎙️</button>
+                <button class="btn hidden" id="next-btn-5">One Last Thing 🙏</button>
             </div>
 
-            <!-- Step 6: Future Together -->
+
+            <!-- Step 6: Final Wish -->
             <div class="step" id="step6">
-                <button class="back-btn" id="back-btn-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
-                <div class="emoji">📝</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Our Future Bucket List</h2>
-                <div
-                    class="bg-gradient-to-r from-pink-200 to-rose-200 rounded-xl p-4 md:p-8 mb-8 flex flex-col items-center">
-                    <div id="bucket-list-container" class="w-full text-left max-h-48 overflow-y-auto mb-4">
-                        <!-- Items will be added here by the script -->
-                    </div>
-                    <div class="flex w-full items-center justify-center">
-                        <input type="text" id="bucket-list-input" placeholder="Add a future plan..."
-                            class="flex-grow p-2 md:p-3 rounded-l-full border-none outline-none focus:ring-2 focus:ring-pink-400 text-gray-700">
-                        <button id="add-bucket-item-btn"
-                            class="bg-pink-500 text-white p-2 md:p-3 rounded-r-full font-bold transition-transform transform hover:scale-105">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                <p class="text-base text-gray-700 mb-6 md:text-lg">
-                    A list of all the things we'll do together. Add your own ideas! ✨
-                </p>
-                <button class="btn" id="next-btn-6">A Message From The Future 💌</button>
-            </div>
-
-            <!-- Step 7: Digital Time Capsule -->
-            <div class="step" id="step7">
-                <button class="back-btn" id="back-btn-7">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
-                <div class="emoji">⏳</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Your Time Capsule</h2>
-                <p class="text-base text-gray-700 mb-6 md:text-lg">
-                    Write a message to your future self, Zanuuu. What are your hopes and dreams? 💖
-                </p>
-                <div class="w-full bg-gradient-to-r from-pink-200 to-rose-200 rounded-xl p-4 md:p-8 mb-8">
-                    <textarea id="time-capsule-input"
-                        class="w-full h-40 p-4 rounded-xl resize-none outline-none focus:ring-2 focus:ring-pink-400 text-gray-700 placeholder-gray-500"
-                        placeholder="Dear Future Zanuuu..."></textarea>
-                    <div id="time-capsule-display" class="hidden text-left">
-                        <p class="text-lg text-gray-700 mb-2">**Your message to your future self:**</p>
-                        <p id="time-capsule-text" class="bg-white p-4 rounded-xl italic"></p>
-                    </div>
-                </div>
-                <button class="btn" id="save-time-capsule-btn">Seal the Capsule 🔒</button>
-                <button class="btn hidden" id="next-btn-7">Play a Mini-Game! 🎮</button>
-            </div>
-
-            <!-- Step 8: Mini-Game -->
-            <div class="step" id="step8">
-                <button class="back-btn" id="back-btn-8">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
-                <div class="emoji">🎮</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Catch the Heart!</h2>
-                <p class="text-base text-gray-700 mb-6 md:text-lg">
-                    Catch as many hearts as you can! Use your mouse or finger to move the catcher.
-                </p>
-                <div class="w-full flex justify-center">
-                    <canvas id="game-canvas" width="400" height="400"></canvas>
-                </div>
-                <div id="game-info" class="w-full max-w-sm">
-                    <span>Score: <span id="score-display">0</span></span>
-                    <span>Missed: <span id="missed-display">0</span> / 5</span>
-                </div>
-                <button class="btn" id="start-game-btn">Start Game 🚀</button>
-                <button class="btn hidden" id="next-btn-8">View Our Gallery 🖼️</button>
-                <div id="game-end-screen">
-                    <h3 class="text-3xl font-bold text-pink-600 mb-4">Game Over!</h3>
-                    <p class="text-lg text-gray-700 mb-4">Your final score is <span id="final-score"
-                            class="font-bold">0</span>.</p>
-                    <button class="btn" id="restart-game-btn">Play Again</button>
-                </div>
-            </div>
-
-            <!-- Step 9: Image Gallery -->
-            <div class="step" id="step9">
-                <button class="back-btn" id="back-btn-9">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
-                <div class="emoji">📸</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Our Memories</h2>
-                <p class="text-base text-gray-700 mb-6 md:text-lg">
-                    A collection of our favorite moments together.
-                </p>
-                <div id="gallery-container"
-                    class="w-full bg-gradient-to-r from-pink-200 to-rose-200 rounded-xl p-4 md:p-8">
-                    <!-- Gallery items will be added here by the script -->
-                </div>
-                <button class="btn" id="next-btn-9">One Last Thing 🙏</button>
-            </div>
-
-            <!-- Step 10: Final Wish -->
-            <div class="step" id="step10">
-                <button class="back-btn" id="back-btn-10">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
                 <div class="emoji">🥳</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Birthday Wish For You</h2>
                 <p class="text-base text-gray-700 mb-8 md:text-lg">
@@ -549,651 +396,419 @@
     </div>
 
     <script>
-        // Use an event listener to ensure the code runs only after the entire page has loaded.
-        window.addEventListener('load', function() {
+        // Custom message box for alerts
+        function showMessage(message, duration = 3000) {
+            const messageBox = document.getElementById('message-box');
+            messageBox.textContent = message;
+            messageBox.classList.add('visible');
+            setTimeout(() => {
+                messageBox.classList.remove('visible');
+            }, duration);
+        }
 
-            // Custom message box for alerts
-            function showMessage(message, duration = 3000) {
-                const messageBox = document.getElementById('message-box');
-                messageBox.textContent = message;
-                messageBox.classList.add('visible');
-                setTimeout(() => {
-                    messageBox.classList.remove('visible');
-                }, duration);
-            }
+        // Three.js Heart Background
+        const container = document.getElementById('canvas-container');
+        const renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            alpha: true
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
 
-            // Three.js Heart Background
-            const container = document.getElementById('canvas-container');
-            const renderer = new THREE.WebGLRenderer({
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 30;
+
+        // Improved Heart Geometry
+        const x = 0, y = 0;
+        const heartShape = new THREE.Shape();
+        heartShape.moveTo(x + 0.5, y + 0.5);
+        heartShape.bezierCurveTo(x + 0.5, y + 0.5, x + 1, y, x, y);
+        heartShape.bezierCurveTo(x - 1, y, x - 1, y + 1.5, x - 1, y + 1.5);
+        heartShape.bezierCurveTo(x - 1, y + 2.5, x + 0.5, y + 3.5, x + 0.5, y + 3.5);
+        heartShape.bezierCurveTo(x + 0.5, y + 3.5, x + 2, y + 2.5, x + 2, y + 1.5);
+        heartShape.bezierCurveTo(x + 2, y + 1.5, x + 2, y, x + 1, y);
+        heartShape.bezierCurveTo(x + 0.5, y, x + 0.5, y + 0.5, x + 0.5, y + 0.5);
+
+        const extrudeSettings = {
+            depth: 0.5,
+            bevelEnabled: true,
+            bevelSegments: 3,
+            bevelSize: 0.2,
+            bevelThickness: 0.3
+        };
+
+        const heartGeometry = new THREE.ExtrudeGeometry(heartShape, extrudeSettings);
+
+        // Create multiple hearts with different colors and properties
+        const hearts = [];
+        const colors = [
+            0xff6b6b, 0xff8e8e, 0xffb3b3, 0xffd8d8,
+            0xff9e9e, 0xffc1c1, 0xff6b8e, 0xff8eb3
+        ];
+
+        for (let i = 0; i < 25; i++) {
+            const material = new THREE.MeshPhongMaterial({
+                color: colors[Math.floor(Math.random() * colors.length)],
+                emissive: 0xff0000,
+                emissiveIntensity: 0.1,
+                shininess: 100,
+                transparent: true,
+                opacity: 0.9
+            });
+
+            const heart = new THREE.Mesh(heartGeometry, material);
+
+            // Random position and scale
+            heart.position.x = (Math.random() - 0.5) * 50;
+            heart.position.y = (Math.random() - 0.5) * 50;
+            heart.position.z = (Math.random() - 0.5) * 50;
+
+            const scale = Math.random() * 0.8 + 0.5;
+            heart.scale.set(scale, scale, scale);
+
+            // Random rotation
+            heart.rotation.x = Math.random() * Math.PI;
+            heart.rotation.y = Math.random() * Math.PI;
+
+            // Store animation properties
+            heart.userData = {
+                speedX: Math.random() * 0.02 - 0.01,
+                speedY: Math.random() * 0.02 - 0.01,
+                speedZ: Math.random() * 0.02 - 0.01,
+                rotationSpeedX: Math.random() * 0.01,
+                rotationSpeedY: Math.random() * 0.01,
+                originalX: heart.position.x,
+                originalY: heart.position.y,
+                originalZ: heart.position.z,
+                floatDistance: 2 + Math.random() * 3
+            };
+
+            scene.add(heart);
+            hearts.push(heart);
+        }
+
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+
+        // Animation loop for heart background
+        function animate() {
+            requestAnimationFrame(animate);
+            hearts.forEach(heart => {
+                const time = Date.now() * 0.001;
+                heart.position.x = heart.userData.originalX + Math.sin(time * heart.userData.speedX * 10) * heart.userData.floatDistance;
+                heart.position.y = heart.userData.originalY + Math.sin(time * heart.userData.speedY * 10) * heart.userData.floatDistance;
+                heart.position.z = heart.userData.originalZ + Math.sin(time * heart.userData.speedZ * 10) * heart.userData.floatDistance;
+                heart.rotation.x += heart.userData.rotationSpeedX;
+                heart.rotation.y += heart.userData.rotationSpeedY;
+            });
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Star Map Logic
+        let starMapScene, starMapCamera, starMapRenderer;
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+        const starCount = 500;
+
+        function initStarMap() {
+            const starMapContainer = document.getElementById('star-map-container');
+            const starMapCanvas = document.getElementById('star-map-canvas');
+
+            const width = starMapContainer.offsetWidth;
+            const height = starMapContainer.offsetHeight;
+
+            starMapRenderer = new THREE.WebGLRenderer({
+                canvas: starMapCanvas,
                 antialias: true,
                 alpha: true
             });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            container.appendChild(renderer.domElement);
+            starMapRenderer.setSize(width, height);
 
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 30;
+            starMapScene = new THREE.Scene();
+            starMapCamera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            starMapCamera.position.z = 5;
 
-            // Heart Geometry
-            const x = 0, y = 0;
-            const heartShape = new THREE.Shape();
-            heartShape.moveTo(x + 0.5, y + 0.5);
-            heartShape.bezierCurveTo(x + 0.5, y + 0.5, x + 1, y, x, y);
-            heartShape.bezierCurveTo(x - 1, y, x - 1, y + 1.5, x - 1, y + 1.5);
-            heartShape.bezierCurveTo(x - 1, y + 2.5, x + 0.5, y + 3.5, x + 0.5, y + 3.5);
-            heartShape.bezierCurveTo(x + 0.5, y + 3.5, x + 2, y + 2.5, x + 2, y + 1.5);
-            heartShape.bezierCurveTo(x + 2, y + 1.5, x + 2, y, x + 1, y);
-            heartShape.bezierCurveTo(x + 0.5, y, x + 0.5, y + 0.5, x + 0.5, y + 0.5);
+            // Generate a starry night sky
+            const starGeometry = new THREE.BufferGeometry();
+            const starVertices = [];
+            for (let i = 0; i < starCount; i++) {
+                const x = (Math.random() - 0.5) * 100;
+                const y = (Math.random() - 0.5) * 100;
+                const z = (Math.random() - 0.5) * 100;
+                starVertices.push(x, y, z);
+            }
+            starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+            const starMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 0.1,
+                sizeAttenuation: true
+            });
+            const starField = new THREE.Points(starGeometry, starMaterial);
+            starMapScene.add(starField);
 
-            const extrudeSettings = {
-                depth: 0.5,
-                bevelEnabled: true,
-                bevelSegments: 3,
-                bevelSize: 0.2,
-                bevelThickness: 0.3
+            // Create a constellation line to represent a connection
+            const lineMaterial = new THREE.LineBasicMaterial({
+                color: 0xff69b4,
+                linewidth: 2,
+                opacity: 0.8,
+                transparent: true
+            });
+            const points = [];
+            points.push(new THREE.Vector3(-2, 1, -1));
+            points.push(new THREE.Vector3(0, 2, 0));
+            points.push(new THREE.Vector3(2, 1, 1));
+            points.push(new THREE.Vector3(1, -2, 2));
+            points.push(new THREE.Vector3(-1, -1, -2));
+            const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+            const line = new THREE.Line(lineGeometry, lineMaterial);
+            starMapScene.add(line);
+
+            // Animation loop for star map
+            const animateStarMap = () => {
+                requestAnimationFrame(animateStarMap);
+                if (!isDragging) {
+                    starMapScene.rotation.y += 0.001;
+                }
+                starMapRenderer.render(starMapScene, starMapCamera);
             };
+            animateStarMap();
 
-            const heartGeometry = new THREE.ExtrudeGeometry(heartShape, extrudeSettings);
+            // Mouse interaction for star map
+            starMapCanvas.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+            starMapCanvas.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+            starMapCanvas.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const deltaMove = {
+                        x: e.clientX - previousMousePosition.x,
+                        y: e.clientY - previousMousePosition.y
+                    };
+                    starMapScene.rotation.y += deltaMove.x * 0.005;
+                    starMapScene.rotation.x += deltaMove.y * 0.005;
+                    previousMousePosition = { x: e.clientX, y: e.clientY };
+                }
+            });
+            window.addEventListener('resize', () => {
+                const newWidth = starMapContainer.offsetWidth;
+                const newHeight = starMapContainer.offsetHeight;
+                starMapCamera.aspect = newWidth / newHeight;
+                starMapCamera.updateProjectionMatrix();
+                starMapRenderer.setSize(newWidth, newHeight);
+            });
+        }
 
-            // Create multiple hearts with different colors and properties
-            const hearts = [];
-            const colors = [
-                0xff6b6b, 0xff8e8e, 0xffb3b3, 0xffd8d8,
-                0xff9e9e, 0xffc1c1, 0xff6b8e, 0xff8eb3
+        // ===============================================
+        // Candle Blowing Logic
+        // ===============================================
+        let audioContext, analyser, microphone, stream;
+        let isBlowing = false;
+        // The blow threshold has been lowered for a lighter blow
+        const blowThreshold = 75; 
+        const candles = [];
+
+        function createCandles() {
+            const cake = document.querySelector('.cake');
+            const candlePositions = [
+                { top: -20, left: '20%' },
+                { top: -25, left: '50%' },
+                { top: -20, left: '80%' },
             ];
 
-            for (let i = 0; i < 25; i++) {
-                const material = new THREE.MeshPhongMaterial({
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    emissive: 0xff0000,
-                    emissiveIntensity: 0.1,
-                    shininess: 100,
-                    transparent: true,
-                    opacity: 0.9
-                });
+            candlePositions.forEach(pos => {
+                const candleDiv = document.createElement('div');
+                candleDiv.className = 'candle';
+                candleDiv.style.top = `${pos.top}px`;
+                candleDiv.style.left = pos.left;
 
-                const heart = new THREE.Mesh(heartGeometry, material);
+                const flameDiv = document.createElement('div');
+                flameDiv.className = 'flame';
+                candleDiv.appendChild(flameDiv);
 
-                // Random position and scale
-                heart.position.x = (Math.random() - 0.5) * 50;
-                heart.position.y = (Math.random() - 0.5) * 50;
-                heart.position.z = (Math.random() - 0.5) * 50;
+                cake.appendChild(candleDiv);
+                candles.push(flameDiv);
+            });
+        }
+        createCandles();
 
-                const scale = Math.random() * 0.8 + 0.5;
-                heart.scale.set(scale, scale, scale);
+        function startBlowingLogic() {
+            const blowMessage = document.getElementById('blow-message');
+            const blowLevelBar = document.getElementById('blow-level');
 
-                // Random rotation
-                heart.rotation.x = Math.random() * Math.PI;
-                heart.rotation.y = Math.random() * Math.PI;
-
-                // Store animation properties
-                heart.userData = {
-                    speedX: Math.random() * 0.02 - 0.01,
-                    speedY: Math.random() * 0.02 - 0.01,
-                    speedZ: Math.random() * 0.02 - 0.01,
-                    rotationSpeedX: Math.random() * 0.01,
-                    rotationSpeedY: Math.random() * 0.01,
-                    originalX: heart.position.x,
-                    originalY: heart.position.y,
-                    originalZ: heart.position.z,
-                    floatDistance: 2 + Math.random() * 3
-                };
-
-                scene.add(heart);
-                hearts.push(heart);
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                blowMessage.textContent = "Microphone access is not supported on this browser.";
+                return;
             }
 
-            // Add lights
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-            scene.add(ambientLight);
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(function(s) {
+                    stream = s;
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    analyser = audioContext.createAnalyser();
+                    microphone = audioContext.createMediaStreamSource(stream);
+                    analyser.minDecibels = -90;
+                    analyser.maxDecibels = -10;
+                    analyser.smoothingTimeConstant = 0.85;
+                    microphone.connect(analyser);
 
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-            directionalLight.position.set(1, 1, 1);
-            scene.add(directionalLight);
+                    const dataArray = new Uint8Array(analyser.fftSize);
 
-            // Animation loop
-            function animate() {
-                requestAnimationFrame(animate);
-                hearts.forEach(heart => {
-                    const time = Date.now() * 0.001;
-                    heart.position.x = heart.userData.originalX + Math.sin(time * heart.userData.speedX * 10) * heart.userData.floatDistance;
-                    heart.position.y = heart.userData.originalY + Math.sin(time * heart.userData.speedY * 10) * heart.userData.floatDistance;
-                    heart.position.z = heart.userData.originalZ + Math.sin(time * heart.userData.speedZ * 10) * heart.userData.floatDistance;
-                    heart.rotation.x += heart.userData.rotationSpeedX;
-                    heart.rotation.y += heart.userData.rotationSpeedY;
+                    blowMessage.textContent = "Permission granted! Blow now! 🌬️";
+
+                    const checkBlow = () => {
+                        analyser.getByteFrequencyData(dataArray);
+                        const volume = dataArray.reduce((acc, val) => acc + val, 0) / dataArray.length;
+
+                        // Update the visual blow meter
+                        blowLevelBar.style.width = `${Math.min(volume, 255) / 2.55}%`;
+                        
+                        if (volume > blowThreshold && !isBlowing) {
+                            blowMessage.textContent = "You blew out the candles! 🎉";
+                            isBlowing = true;
+                            candles.forEach(flame => {
+                                flame.classList.add('out');
+                            });
+                            // Wait a moment then show the next button
+                            setTimeout(() => {
+                                document.getElementById('next-btn-5').classList.remove('hidden');
+                                document.getElementById('start-blow-btn').classList.add('hidden');
+                            }, 1000);
+                        }
+
+                        if (!isBlowing) {
+                            requestAnimationFrame(checkBlow);
+                        }
+                    };
+                    checkBlow();
+                })
+                .catch(function(err) {
+                    blowMessage.textContent = "Microphone access denied. Please allow permission to blow out the candles.";
+                    console.error("Error accessing microphone:", err);
                 });
-                renderer.render(scene, camera);
+        }
+        
+        // ===============================================
+        // Step Navigation and Button Event Listeners
+        // ===============================================
+        let currentStep = 1;
+        const totalSteps = 6;
+
+        function updateProgressBar() {
+            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+
+        function showStep(stepNumber) {
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById(`step${stepNumber}`).classList.add('active');
+            updateProgressBar();
+            
+            if (stepNumber === totalSteps) {
+                document.getElementById('confetti-btn').classList.add('animate-pulse');
             }
+            if (stepNumber === 4 && !starMapScene) {
+                initStarMap();
+            }
+        }
+        
+        document.getElementById('start-btn').addEventListener('click', () => {
+            currentStep = 2;
+            showStep(currentStep);
+        });
 
-            animate();
+        document.getElementById('next-btn-2').addEventListener('click', () => {
+            currentStep = 3;
+            showStep(currentStep);
+        });
+        
+        document.getElementById('next-btn-3').addEventListener('click', () => {
+            currentStep = 4;
+            showStep(currentStep);
+        });
 
-            // Handle window resize for the heart background
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('next-btn-4').addEventListener('click', () => {
+            currentStep = 5;
+            showStep(currentStep);
+        });
+        
+        document.getElementById('start-blow-btn').addEventListener('click', () => {
+            document.getElementById('start-blow-btn').disabled = true; // Prevent multiple clicks
+            startBlowingLogic();
+        });
+
+        document.getElementById('next-btn-5').addEventListener('click', () => {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+            currentStep = 6;
+            showStep(currentStep);
+        });
+
+        // Confetti button
+        document.getElementById('confetti-btn').addEventListener('click', () => {
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff0000', '#ff69b4', '#ff1493', '#ffc0cb']
             });
 
-            // Star Map Logic
-            let starMapScene, starMapCamera, starMapRenderer;
-            let isDragging = false;
-            let previousMousePosition = { x: 0, y: 0 };
-            const starCount = 500;
-
-            function initStarMap() {
-                const starMapContainer = document.getElementById('star-map-container');
-                const starMapCanvas = document.getElementById('star-map-canvas');
-
-                if (!starMapContainer || !starMapCanvas) return;
-
-                const width = starMapContainer.offsetWidth;
-                const height = starMapContainer.offsetHeight;
-
-                starMapRenderer = new THREE.WebGLRenderer({
-                    canvas: starMapCanvas,
-                    antialias: true,
-                    alpha: true
+            setTimeout(() => {
+                confetti({
+                    particleCount: 30,
+                    spread: 60,
+                    origin: { y: 0.5 },
+                    shapes: ['heart'],
+                    colors: ['#ff0000', '#ff69b4']
                 });
-                starMapRenderer.setSize(width, height);
+            }, 300);
 
-                starMapScene = new THREE.Scene();
-                starMapCamera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-                starMapCamera.position.z = 5;
-
-                const starGeometry = new THREE.BufferGeometry();
-                const starVertices = [];
-                for (let i = 0; i < starCount; i++) {
-                    const x = (Math.random() - 0.5) * 100;
-                    const y = (Math.random() - 0.5) * 100;
-                    const z = (Math.random() - 0.5) * 100;
-                    starVertices.push(x, y, z);
-                }
-                starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-                const starMaterial = new THREE.PointsMaterial({
-                    color: 0xffffff,
-                    size: 0.1,
-                    sizeAttenuation: true
-                });
-                const starField = new THREE.Points(starGeometry, starMaterial);
-                starMapScene.add(starField);
-
-                const lineMaterial = new THREE.LineBasicMaterial({
-                    color: 0xff69b4,
-                    linewidth: 2,
-                    opacity: 0.8,
-                    transparent: true
-                });
-                const points = [];
-                points.push(new THREE.Vector3(-2, 1, -1));
-                points.push(new THREE.Vector3(0, 2, 0));
-                points.push(new THREE.Vector3(2, 1, 1));
-                points.push(new THREE.Vector3(1, -2, 2));
-                points.push(new THREE.Vector3(-1, -1, -2));
-                const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
-                const line = new THREE.Line(lineGeometry, lineMaterial);
-                starMapScene.add(line);
-
-                const animateStarMap = () => {
-                    requestAnimationFrame(animateStarMap);
-                    if (!isDragging) {
-                        starMapScene.rotation.y += 0.001;
-                    }
-                    starMapRenderer.render(starMapScene, starMapCamera);
-                };
-                animateStarMap();
-
-                starMapCanvas.addEventListener('mousedown', (e) => {
-                    isDragging = true;
-                    previousMousePosition = { x: e.clientX, y: e.clientY };
+            setTimeout(() => {
+                confetti({
+                    particleCount: 20,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    shapes: ['heart'],
+                    colors: ['#ff0000', '#ff69b4']
                 });
 
-                starMapCanvas.addEventListener('mouseup', () => {
-                    isDragging = false;
+                confetti({
+                    particleCount: 20,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    shapes: ['heart'],
+                    colors: ['#ff0000', '#ff69b4']
                 });
+            }, 600);
 
-                starMapCanvas.addEventListener('mousemove', (e) => {
-                    if (isDragging) {
-                        const deltaMove = { x: e.clientX - previousMousePosition.x, y: e.clientY - previousMousePosition.y };
-                        starMapScene.rotation.y += deltaMove.x * 0.005;
-                        starMapScene.rotation.x += deltaMove.y * 0.005;
-                        previousMousePosition = { x: e.clientX, y: e.clientY };
-                    }
-                });
-
-                window.addEventListener('resize', () => {
-                    const newWidth = starMapContainer.offsetWidth;
-                    const newHeight = starMapContainer.offsetHeight;
-                    starMapCamera.aspect = newWidth / newHeight;
-                    starMapCamera.updateProjectionMatrix();
-                    starMapRenderer.setSize(newWidth, newHeight);
-                });
-            }
-
-            // Local Storage Functions for a fully working website
-            function saveToLocalStorage(key, data) {
-                try {
-                    localStorage.setItem(key, JSON.stringify(data));
-                } catch (e) {
-                    console.error("Error saving to localStorage", e);
-                }
-            }
-
-            function loadFromLocalStorage(key) {
-                try {
-                    const data = localStorage.getItem(key);
-                    return data ? JSON.parse(data) : null;
-                } catch (e) {
-                    console.error("Error loading from localStorage", e);
-                    return null;
-                }
-            }
-
-            // Love Wall Functions
-            function updateLoveWallFromLocalStorage() {
-                const loveWallContainer = document.getElementById('love-wall-container');
-                const loveNotes = loadFromLocalStorage('loveNotes') || [];
-                loveWallContainer.innerHTML = '';
-                if (loveNotes.length > 0) {
-                    loveNotes.forEach(note => {
-                        const noteEl = document.createElement('div');
-                        noteEl.className = 'love-wall-item';
-                        noteEl.innerHTML = `<p>${note.message}</p><small>From ${note.author}</small>`;
-                        loveWallContainer.appendChild(noteEl);
-                    });
-                } else {
-                    loveWallContainer.innerHTML = '<p class="text-gray-500 italic p-4">No notes yet... Add the first one!</p>';
-                }
-                loveWallContainer.scrollTop = loveWallContainer.scrollHeight;
-            }
-
-            function addLoveNote(message, author) {
-                const loveNotes = loadFromLocalStorage('loveNotes') || [];
-                loveNotes.push({ message, author });
-                saveToLocalStorage('loveNotes', loveNotes);
-                updateLoveWallFromLocalStorage();
-                showMessage("Note added to the wall!");
-            }
-
-            // Bucket List Functions
-            function updateBucketListFromLocalStorage() {
-                const bucketListContainer = document.getElementById('bucket-list-container');
-                const bucketList = loadFromLocalStorage('bucketList') || [];
-                bucketListContainer.innerHTML = '';
-                if (bucketList.length > 0) {
-                    bucketList.forEach(item => {
-                        const itemEl = document.createElement('div');
-                        itemEl.className = 'bucket-list-item';
-                        itemEl.innerHTML = `<span>${item.itemText}</span>`;
-                        bucketListContainer.appendChild(itemEl);
-                    });
-                } else {
-                    bucketListContainer.innerHTML = '<p class="text-gray-500 italic p-4">Your future together starts here...</p>';
-                }
-                bucketListContainer.scrollTop = bucketListContainer.scrollHeight;
-            }
-
-            function addBucketItem(itemText) {
-                const bucketList = loadFromLocalStorage('bucketList') || [];
-                bucketList.push({ itemText });
-                saveToLocalStorage('bucketList', bucketList);
-                updateBucketListFromLocalStorage();
-                showMessage("Bucket list item added!");
-            }
-
-            // Time Capsule Functions
-            function updateTimeCapsuleFromLocalStorage() {
-                const timeCapsuleInput = document.getElementById('time-capsule-input');
-                const timeCapsuleDisplay = document.getElementById('time-capsule-display');
-                const timeCapsuleText = document.getElementById('time-capsule-text');
-                const saveTimeCapsuleBtn = document.getElementById('save-time-capsule-btn');
-                const nextBtn7 = document.getElementById('next-btn-7');
-
-                const timeCapsule = loadFromLocalStorage('timeCapsule');
-
-                if (timeCapsule && timeCapsule.message) {
-                    timeCapsuleText.textContent = timeCapsule.message;
-                    timeCapsuleInput.style.display = 'none';
-                    saveTimeCapsuleBtn.style.display = 'none';
-                    timeCapsuleDisplay.style.display = 'block';
-                    nextBtn7.style.display = 'block';
-                    showMessage("Time capsule message found!");
-                } else {
-                    timeCapsuleInput.style.display = 'block';
-                    saveTimeCapsuleBtn.style.display = 'block';
-                    timeCapsuleDisplay.style.display = 'none';
-                    nextBtn7.style.display = 'none';
-                }
-            }
-
-            function saveTimeCapsule(message) {
-                saveToLocalStorage('timeCapsule', { message });
-                updateTimeCapsuleFromLocalStorage();
-                showMessage("Time capsule sealed! It's saved just for you on this device.", 3000);
-            }
-
-            // Mini-Game Logic
-            let gameCanvas, gameCtx, catcher, heartsGame, score, missed, gameInterval, gameRunning;
-            const heartImage = new Image();
-            heartImage.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmNDM5NWUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1oZWFydCI+PHBhdGggZD0iTTE5IDBjLTkuNzI5IDcuMTgyLTEwLjYxOCA5Ljc4OS0xMCAxNC0xLjM2LTcuNTg2IDUtMTQgMTAtMTQiLz48L3N2Zz4=";
-
-            function initGame() {
-                gameCanvas = document.getElementById('game-canvas');
-                gameCtx = gameCanvas.getContext('2d');
-                catcher = {
-                    x: gameCanvas.width / 2 - 25,
-                    y: gameCanvas.height - 30,
-                    width: 50,
-                    height: 10,
-                    color: '#ec4899'
-                };
-                heartsGame = [];
-                score = 0;
-                missed = 0;
-                gameRunning = false;
-                document.getElementById('score-display').textContent = score;
-                document.getElementById('missed-display').textContent = missed;
-            }
-
-            function startGame() {
-                if (!gameRunning) {
-                    initGame();
-                    gameRunning = true;
-                    document.getElementById('start-game-btn').style.display = 'none';
-                    document.getElementById('game-end-screen').style.display = 'none';
-                    gameInterval = setInterval(gameLoop, 1000 / 60);
-                }
-            }
-
-            function gameLoop() {
-                updateGame();
-                drawGame();
-            }
-
-            function updateGame() {
-                for (let i = 0; i < heartsGame.length; i++) {
-                    heartsGame[i].y += heartsGame[i].speed;
-                    if (heartsGame[i].y + heartsGame[i].radius > catcher.y &&
-                        heartsGame[i].x > catcher.x && heartsGame[i].x < catcher.x + catcher.width) {
-                        score++;
-                        document.getElementById('score-display').textContent = score;
-                        heartsGame.splice(i, 1);
-                        i--;
-                    } else if (heartsGame[i].y + heartsGame[i].radius > gameCanvas.height) {
-                        missed++;
-                        document.getElementById('missed-display').textContent = missed;
-                        heartsGame.splice(i, 1);
-                        i--;
-                    }
-                }
-                if (missed >= 5) {
-                    endGame();
-                }
-                if (Math.random() < 0.02) {
-                    heartsGame.push({
-                        x: Math.random() * gameCanvas.width,
-                        y: 0,
-                        radius: 15,
-                        speed: Math.random() * 2 + 1
-                    });
-                }
-            }
-
-            function drawGame() {
-                gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-                heartsGame.forEach(heart => {
-                    gameCtx.drawImage(heartImage, heart.x, heart.y, heart.radius * 2, heart.radius * 2);
-                });
-                gameCtx.fillStyle = catcher.color;
-                gameCtx.fillRect(catcher.x, catcher.y, catcher.width, catcher.height);
-            }
-
-            function endGame() {
-                gameRunning = false;
-                clearInterval(gameInterval);
-                document.getElementById('final-score').textContent = score;
-                document.getElementById('game-end-screen').style.display = 'flex';
-                document.getElementById('next-btn-8').style.display = 'block';
-            }
-
-            function handleMouseMove(e) {
-                if (gameRunning) {
-                    const rect = gameCanvas.getBoundingClientRect();
-                    let clientX = e.clientX;
-                    if (e.touches && e.touches.length > 0) {
-                        clientX = e.touches[0].clientX;
-                    }
-                    const newX = clientX - rect.left - catcher.width / 2;
-                    catcher.x = Math.max(0, Math.min(newX, gameCanvas.width - catcher.width));
-                }
-            }
-
-            // Floating Love Boxes & Gallery Data
-            const loveReasons = [
-                "Your beautiful smile", "Your caring heart", "Your contagious laughter",
-                "The way you look at me", "Your crazy jealousy", "Your perfect hair",
-                "Your beautiful eyes", "Your comforting hugs", "Your unwavering support",
-                "Your incredible strength", "Your gentle touch", "Your playful nature",
-                "Your intelligence and wit", "The way you listen to me", "Your pure, kind soul"
-            ];
-            const galleryItems = [
-                { url: "https://placehold.co/400x400/9b59b6/ffffff?text=Our+Day", text: "The day we met" },
-                { url: "https://placehold.co/400x500/3498db/ffffff?text=Our+Adventures", text: "Our first adventure" },
-                { url: "https://placehold.co/500x400/e74c3c/ffffff?text=Laughter", text: "All our laughter" },
-                { url: "https://placehold.co/500x500/2ecc71/ffffff?text=My+Favourite+Smile", text: "My favorite smile" },
-                { url: "https://placehold.co/400x500/f1c40f/ffffff?text=Summer+Vibes", text: "That summer day" },
-                { url: "https://placehold.co/500x400/1abc9c/ffffff?text=Cuddle+Weather", text: "Cuddle weather" },
-                { url: "https://placehold.co/400x400/34495e/ffffff?text=Our+Future", text: "Dreaming of our future" },
-                { url: "https://placehold.co/400x500/95a5a6/ffffff?text=My+Everything", text: "You are my everything" }
-            ];
-
-            // Functions to populate dynamic content
-            function populateLoveBoxes() {
-                const container = document.getElementById('love-boxes-container');
-                container.innerHTML = '';
-                loveReasons.forEach((reason) => {
-                    const box = document.createElement('div');
-                    box.className = 'love-box';
-                    box.textContent = reason;
-                    box.style.animationDelay = `${(Math.random() * 2) - 1}s`;
-                    box.style.animationDuration = `${5 + Math.random() * 3}s`;
-                    container.appendChild(box);
-                });
-            }
-
-            function populateGallery() {
-                const container = document.getElementById('gallery-container');
-                container.innerHTML = '';
-                galleryItems.forEach(item => {
-                    const galleryEl = document.createElement('div');
-                    galleryEl.className = 'gallery-item';
-                    galleryEl.innerHTML = `
-                        <img src="${item.url}" alt="${item.text}">
-                        <div class="gallery-text">${item.text}</div>
-                    `;
-                    container.appendChild(galleryEl);
-                });
-            }
-
-            // ===============================================
-            // Main App Setup and Event Listeners
-            // ===============================================
-
-            // Initial data load and UI update
-            function setupApp() {
-                updateLoveWallFromLocalStorage();
-                updateBucketListFromLocalStorage();
-                updateTimeCapsuleFromLocalStorage();
-                populateLoveBoxes();
-                populateGallery();
-                updateProgressBar();
-                initGame();
-                
-                // Love Wall & Bucket List Event Listeners
-                const loveNoteInput = document.getElementById('love-note-input');
-                const addLoveNoteBtn = document.getElementById('add-love-note-btn');
-                if(addLoveNoteBtn) {
-                  addLoveNoteBtn.addEventListener('click', () => {
-                      const message = loveNoteInput.value.trim();
-                      if (message) {
-                          addLoveNote(message, "Moi");
-                          loveNoteInput.value = '';
-                      }
-                  });
-                }
-                
-                const bucketListInput = document.getElementById('bucket-list-input');
-                const addBucketItemBtn = document.getElementById('add-bucket-item-btn');
-                if(addBucketItemBtn) {
-                  addBucketItemBtn.addEventListener('click', () => {
-                      const itemText = bucketListInput.value.trim();
-                      if (itemText) {
-                          addBucketItem(itemText);
-                          bucketListInput.value = '';
-                      }
-                  });
-                }
-                
-                const saveTimeCapsuleBtn = document.getElementById('save-time-capsule-btn');
-                if(saveTimeCapsuleBtn) {
-                  saveTimeCapsuleBtn.addEventListener('click', () => {
-                      const message = document.getElementById('time-capsule-input').value.trim();
-                      if (message) {
-                          saveTimeCapsule(message);
-                      }
-                  });
-                }
-
-                // Game event listeners
-                const startGameBtn = document.getElementById('start-game-btn');
-                if(startGameBtn) { startGameBtn.addEventListener('click', startGame); }
-                const restartGameBtn = document.getElementById('restart-game-btn');
-                if(restartGameBtn) { restartGameBtn.addEventListener('click', startGame); }
-                const gameCanvasEl = document.getElementById('game-canvas');
-                if(gameCanvasEl) {
-                  gameCanvasEl.addEventListener('mousemove', handleMouseMove);
-                  gameCanvasEl.addEventListener('touchmove', handleMouseMove);
-                }
-
-                // ===============================================
-                // Step Navigation Logic with Back Button (Simplified)
-                // ===============================================
-                let currentStep = 1;
-                const totalSteps = 10;
-
-                function updateProgressBar() {
-                    const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
-                    const progressBar = document.getElementById('progress-bar');
-                    if (progressBar) progressBar.style.width = `${progress}%`;
-                }
-
-                function showStep(stepNumber) {
-                    document.querySelectorAll('.step').forEach(step => {
-                        step.classList.remove('active');
-                    });
-                    const nextStep = document.getElementById(`step${stepNumber}`);
-                    if (nextStep) {
-                        nextStep.classList.add('active');
-                    }
-                    currentStep = stepNumber;
-                    updateProgressBar();
-
-                    if (stepNumber === totalSteps) {
-                        const confettiBtn = document.getElementById('confetti-btn');
-                        if (confettiBtn) confettiBtn.classList.add('animate-pulse');
-                    }
-                    if (stepNumber === 4 && !starMapScene) {
-                        initStarMap();
-                    }
-                }
-                
-                // Explicitly attach event listeners to each button
-                const startBtn = document.getElementById('start-btn');
-                if (startBtn) startBtn.addEventListener('click', () => showStep(2));
-                
-                const nextBtn2 = document.getElementById('next-btn-2');
-                if (nextBtn2) nextBtn2.addEventListener('click', () => showStep(3));
-                
-                const backBtn2 = document.getElementById('back-btn-2');
-                if (backBtn2) backBtn2.addEventListener('click', () => showStep(1));
-                
-                const nextBtn3 = document.getElementById('next-btn-3');
-                if (nextBtn3) nextBtn3.addEventListener('click', () => showStep(4));
-                
-                const backBtn3 = document.getElementById('back-btn-3');
-                if (backBtn3) backBtn3.addEventListener('click', () => showStep(2));
-
-                const nextBtn4 = document.getElementById('next-btn-4');
-                if (nextBtn4) nextBtn4.addEventListener('click', () => showStep(5));
-                
-                const backBtn4 = document.getElementById('back-btn-4');
-                if (backBtn4) backBtn4.addEventListener('click', () => showStep(3));
-
-                const nextBtn5 = document.getElementById('next-btn-5');
-                if (nextBtn5) nextBtn5.addEventListener('click', () => showStep(6));
-                
-                const backBtn5 = document.getElementById('back-btn-5');
-                if (backBtn5) backBtn5.addEventListener('click', () => showStep(4));
-
-                const nextBtn6 = document.getElementById('next-btn-6');
-                if (nextBtn6) nextBtn6.addEventListener('click', () => showStep(7));
-                
-                const backBtn6 = document.getElementById('back-btn-6');
-                if (backBtn6) backBtn6.addEventListener('click', () => showStep(5));
-                
-                const nextBtn7 = document.getElementById('next-btn-7');
-                if (nextBtn7) nextBtn7.addEventListener('click', () => showStep(8));
-                
-                const backBtn7 = document.getElementById('back-btn-7');
-                if (backBtn7) backBtn7.addEventListener('click', () => showStep(6));
-                
-                const nextBtn8 = document.getElementById('next-btn-8');
-                if (nextBtn8) nextBtn8.addEventListener('click', () => showStep(9));
-                
-                const backBtn8 = document.getElementById('back-btn-8');
-                if (backBtn8) backBtn8.addEventListener('click', () => showStep(7));
-                
-                const nextBtn9 = document.getElementById('next-btn-9');
-                if (nextBtn9) nextBtn9.addEventListener('click', () => showStep(10));
-                
-                const backBtn9 = document.getElementById('back-btn-9');
-                if (backBtn9) backBtn9.addEventListener('click', () => showStep(8));
-                
-                const backBtn10 = document.getElementById('back-btn-10');
-                if (backBtn10) backBtn10.addEventListener('click', () => showStep(9));
-
-                const confettiBtn = document.getElementById('confetti-btn');
-                if (confettiBtn) {
-                  confettiBtn.addEventListener('click', () => {
-                      confetti({
-                          particleCount: 100,
-                          spread: 50,
-                          origin: { y: 0.6 },
-                          colors: ['#ff0000', '#ff69b4', '#ff1493', '#ffc0cb']
-                      });
-                      setTimeout(() => {
-                          confetti({
-                              particleCount: 20,
-                              spread: 40,
-                              origin: { y: 0.5 },
-                              shapes: ['heart'],
-                              colors: ['#ff0000', '#ff69b4']
-                          });
-                      }, 300);
-                      gsap.to(hearts, {
-                          y: -50,
-                          opacity: 0,
-                          duration: 3,
-                          ease: "power1.out",
-                          stagger: 0.1
-                      });
-                  });
-                }
-            }
-
-            // Run the setup function after the window has loaded
-            setupApp();
+            hearts.forEach(heart => {
+                gsap.to(heart.position, { y: heart.position.y - 30, duration: 3, ease: "power1.out" });
+                gsap.to(heart.material, { opacity: 0, duration: 3, ease: "power1.out" });
+            });
         });
+
+        updateProgressBar();
     </script>
 </body>
 
