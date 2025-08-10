@@ -10,12 +10,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
+        * {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
         body {
             margin: 0;
             overflow: hidden;
             font-family: 'Inter', sans-serif;
             height: 100vh;
-            touch-action: manipulation;
             background: linear-gradient(135deg, #f9a8d4, #f3e8ff);
         }
 
@@ -41,10 +45,12 @@
 
         .step {
             position: absolute;
-            width: 90%;
+            width: 95%;
             max-width: 800px;
+            height: 95%;
+            max-height: 700px;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -55,34 +61,15 @@
             pointer-events: none;
             display: none;
             z-index: 50;
+            overflow: hidden;
         }
 
         .step.active {
             opacity: 1;
             transform: translateY(0);
             pointer-events: all;
-            display: block;
-        }
-
-        /* Special style for the compliment step */
-        #step3.active {
-            background: transparent;
-            backdrop-filter: none;
-            box-shadow: none;
-            justify-content: space-between;
-        }
-
-        #step3-top-text,
-        #step3-bottom-button {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 90%;
-            max-width: 800px;
-            text-align: center;
-            z-index: 60;
+            display: flex;
+            flex-direction: column;
         }
 
         .btn {
@@ -102,6 +89,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            z-index: 100;
         }
 
         .btn:hover {
@@ -147,7 +135,7 @@
 
         .emoji {
             font-size: 3rem;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             display: inline-block;
         }
 
@@ -158,18 +146,19 @@
             transform: translateX(-50%);
             width: 80%;
             max-width: 400px;
-            height: 6px;
+            height: 8px;
             background: rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
+            border-radius: 4px;
             z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         #progress-bar {
             height: 100%;
             width: 0%;
             background: linear-gradient(90deg, #ec4899, #f43f5e);
-            border-radius: 3px;
-            transition: width 0.5s ease;
+            border-radius: 4px;
+            transition: width 0.5s ease, background-color 0.3s ease;
         }
 
         #canvas-container {
@@ -187,6 +176,8 @@
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
+            width: 100%;
+            height: 300px;
         }
 
         /* Message box styles */
@@ -213,30 +204,35 @@
 
         /* Floating compliments container */
         #compliments-container {
-            position: absolute;
-            top: 0;
-            left: 0;
+            flex: 1;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            grid-gap: 15px;
+            padding: 15px;
             width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 2;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
+            margin: 10px 0;
         }
-        
+
+        /* Floating compliments styles */
         .floating-compliment {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(5px);
             border-radius: 15px;
-            padding: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            font-size: 0.8rem;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
             color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            pointer-events: none;
-            z-index: 1;
+            animation: hover 3s infinite alternate ease-in-out;
+            transition: transform 0.3s ease;
+        }
+        
+        .floating-compliment:hover {
+            transform: scale(1.05);
         }
         
         @keyframes hover {
@@ -244,10 +240,21 @@
                 transform: translateY(0);
             }
             100% {
-                transform: translateY(-10px);
+                transform: translateY(-5px);
             }
         }
         
+        #step3-header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+        }
+
         /* Blow out candles section styles */
         #candles-container {
             position: relative;
@@ -336,13 +343,134 @@
             border-radius: 10px;
             transition: width 0.1s ease-out;
         }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .step {
+                width: 100%;
+                height: 100%;
+                max-height: none;
+                border-radius: 0;
+                padding: 15px;
+            }
+            
+            #progress-container {
+                top: 10px;
+                width: 90%;
+            }
+            
+            .emoji {
+                font-size: 2.5rem;
+            }
+            
+            h1, h2 {
+                font-size: 1.8rem !important;
+            }
+            
+            p {
+                font-size: 1rem !important;
+            }
+            
+            #star-map-canvas {
+                height: 250px;
+            }
+            
+            #compliments-container {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                grid-gap: 10px;
+                padding: 10px;
+            }
+            
+            .floating-compliment {
+                padding: 12px;
+                font-size: 0.85rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .emoji {
+                font-size: 2rem;
+            }
+            
+            h1, h2 {
+                font-size: 1.6rem !important;
+            }
+            
+            p {
+                font-size: 0.9rem !important;
+            }
+            
+            #star-map-canvas {
+                height: 200px;
+            }
+            
+            #compliments-container {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                grid-gap: 8px;
+            }
+            
+            .floating-compliment {
+                padding: 10px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Navigation controls */
+        .nav-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+        
+        /* Step footer */
+        .step-footer {
+            width: 100%;
+            padding-top: 15px;
+            margin-top: auto;
+        }
+        
+        /* Hide scrollbar for cleaner look */
+        #compliments-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        #compliments-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
 
 <body>
     <div id="app">
         <div id="canvas-container"></div>
-        <div id="compliments-container"></div>
 
         <div id="progress-container">
             <div id="progress-bar"></div>
@@ -353,91 +481,112 @@
         <div id="content">
             <div class="step active" id="step1">
                 <div class="emoji heart-beat">❤️</div>
-                <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gradient animated-title">Hey Zanuuu</h1>
-                <p class="text-lg text-gray-700 mb-8 md:text-xl">I made something special for you... ✨</p>
-                <button class="btn" id="start-btn">Let's Begin 🎉</button>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gradient animated-title">Hey Zanuuu</h1>
+                <p class="text-lg text-gray-700 mb-6 md:text-xl">I made something special for you... ✨</p>
+                <div class="step-footer">
+                    <button class="btn" id="start-btn">Let's Begin 🎉</button>
+                </div>
             </div>
 
             <div class="step" id="step2">
                 <div class="emoji">🎂</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Happy Birthday!</h2>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">Happy Birthday!</h2>
                 <p class="text-base text-gray-700 mb-6 md:text-lg">
                     On your special day, I want you to know how amazing you are. Your smile brightens my world, your
                     laughter is my favorite melody, and your presence makes every moment magical.
                 </p>
-                <button class="btn" id="next-btn-2">A few words for you 💖</button>
+                <div class="step-footer">
+                    <button class="btn" id="next-btn-2">A few words for you 💖</button>
+                </div>
             </div>
 
             <div class="step" id="step3">
-                <div id="step3-top-text">
+                <div id="step3-header">
                     <div class="emoji">👑</div>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Some words for moi Zanuu</h2>
-                    <p class="text-base text-gray-700 md:text-lg">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2 text-gradient">Some words for moi Zanuu</h2>
+                    <p class="text-base text-gray-700 mb-4 md:text-lg">
                         A few of the countless reasons why you are so special to me...
                     </p>
                 </div>
                 
-                <div id="step3-bottom-button">
+                <div id="compliments-container"></div>
+                
+                <div class="step-footer">
                     <button class="btn" id="next-btn-3">A Glimpse into the Sky 🔭</button>
                 </div>
             </div>
 
             <div class="step" id="step4">
                 <div class="emoji">🌌</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">The Stars of Our Beginning</h2>
-                <p class="text-base text-gray-700 mb-6 md:text-lg">
-                    This is what the night sky looked like on **June 10th**, the day you came into my life. ✨
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">The Stars of Our Beginning</h2>
+                <p class="text-base text-gray-700 mb-4 md:text-lg">
+                    This is what the night sky looked like on <strong>June 10th</strong>, the day you came into my life. ✨
                 </p>
-                <div id="star-map-container" class="w-full h-64 md:h-96 relative rounded-xl mb-4">
-                    <canvas id="star-map-canvas" class="w-full h-full"></canvas>
+                <div id="star-map-container" class="w-full relative rounded-xl mb-4">
+                    <canvas id="star-map-canvas" class="w-full"></canvas>
                 </div>
-                <p class="text-sm text-gray-500 italic mt-2">
-                    Click and drag to explore the sky!
+                <p class="text-sm text-gray-500 italic mb-4">
+                    Touch and drag to explore the sky!
                 </p>
-                <button class="btn" id="next-btn-4">Make a Wish 🎁</button>
+                <div class="step-footer">
+                    <button class="btn" id="next-btn-4">Make a Wish 🎁</button>
+                </div>
             </div>
 
             <div class="step" id="step5">
                 <div class="emoji">🕯️</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Make a Wish!</h2>
-                <p class="text-base text-gray-700 mb-6 md:text-lg">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">Make a Wish!</h2>
+                <p class="text-base text-gray-700 mb-4 md:text-lg">
                     Close your eyes, make a wish, and blow into your microphone to blow out the candles!
                 </p>
                 <div id="candles-container">
                     <div class="cake">
                         <div class="icing"></div>
-                        </div>
+                    </div>
                 </div>
                 <div id="blow-meter">
                     <div id="blow-level"></div>
                 </div>
-                <p id="blow-message" class="mt-4 text-gray-700 text-sm italic"></p>
-                <div class="flex flex-col items-center w-full">
+                <p id="blow-message" class="mt-2 text-gray-700 text-sm italic"></p>
+                <div class="flex flex-col items-center w-full mt-4">
                     <button class="btn w-full max-w-sm" id="start-blow-btn">Start Blowing 🎙️</button>
                     <button class="btn btn-small" id="manual-blow-btn">Click to Blow</button>
                     <button class="btn hidden w-full max-w-sm" id="next-btn-5">One Last Thing 🙏</button>
                 </div>
             </div>
 
-
             <div class="step" id="step6">
                 <div class="emoji">🥳</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Birthday Wish For You</h2>
-                <p class="text-base text-gray-700 mb-8 md:text-lg">
-                    Happy Birthday, my love ❤️ Even though miles separate us today, my heart is right there with you,
-                    celebrating every beautiful thing about you. I wish I could hold you close and see that perfect
-                    smile in person, but until that day comes, I’ll keep sending you my love across every distance. You
-                    are my reason to believe in forever, my safe place, and my greatest blessing. No matter how far we
-                    are, you’re always the closest thing to me. I hope this year brings you as much happiness as you’ve
-                    given me, and I can’t wait for the day when I can say these words to you while looking into your
-                    eyes ayeee shammu arai .May Allah bless you with everything you wished for and be happy moi lil zanuuu
-                    Ummmaahhhhh💋!
-                </p>
-                <p class="text-lg font-semibold text-pink-600 mb-8 md:text-xl">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">Birthday Wish For You</h2>
+                <div class="text-base text-gray-700 mb-4 md:text-lg overflow-y-auto flex-grow">
+                    <p class="mb-4">
+                        Happy Birthday, my love ❤️ Even though miles separate us today, my heart is right there with you,
+                        celebrating every beautiful thing about you.
+                    </p>
+                    <p class="mb-4">
+                        I wish I could hold you close and see that perfect smile in person, but until that day comes, 
+                        I'll keep sending you my love across every distance.
+                    </p>
+                    <p class="mb-4">
+                        You are my reason to believe in forever, my safe place, and my greatest blessing. 
+                        No matter how far we are, you're always the closest thing to me.
+                    </p>
+                    <p class="mb-4">
+                        I hope this year brings you as much happiness as you've given me, and I can't wait for the day 
+                        when I can say these words to you while looking into your eyes ayeee shammu arai.
+                    </p>
+                    <p class="mb-4">
+                        May Allah bless you with everything you wished for and be happy moi lil zanuuu
+                        Ummmaahhhhh💋!
+                    </p>
+                </div>
+                <p class="text-lg font-semibold text-pink-600 mb-4 md:text-xl">
                     Happy Birthday, my zanuuu! ❤️
                 </p>
-                <button class="btn" id="confetti-btn">Celebrate! 🎉</button>
-                <p class="mt-8 text-sm text-gray-500">Made with ❤️ just for you</p>
+                <div class="step-footer">
+                    <button class="btn" id="confetti-btn">Celebrate! 🎉</button>
+                    <p class="mt-4 text-sm text-gray-500">Made with ❤️ just for you</p>
+                </div>
             </div>
         </div>
     </div>
@@ -580,7 +729,7 @@
             const starMapCanvas = document.getElementById('star-map-canvas');
 
             const width = starMapContainer.offsetWidth;
-            const height = starMapContainer.offsetHeight;
+            const height = 300; // Fixed height for mobile
 
             starMapRenderer = new THREE.WebGLRenderer({
                 canvas: starMapCanvas,
@@ -614,7 +763,7 @@
             // Create a constellation line to represent a connection
             const lineMaterial = new THREE.LineBasicMaterial({
                 color: 0xff69b4,
-                linewidth: 2,
+                linewidth: 3,
                 opacity: 0.8,
                 transparent: true
             });
@@ -663,12 +812,40 @@
                     };
                 }
             });
+            
+            // Touch events for mobile
+            starMapCanvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                isDragging = true;
+                previousMousePosition = {
+                    x: e.touches[0].clientX,
+                    y: e.touches[0].clientY
+                };
+            });
+            starMapCanvas.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+            starMapCanvas.addEventListener('touchmove', (e) => {
+                if (isDragging) {
+                    const deltaMove = {
+                        x: e.touches[0].clientX - previousMousePosition.x,
+                        y: e.touches[0].clientY - previousMousePosition.y
+                    };
+                    starMapScene.rotation.y += deltaMove.x * 0.005;
+                    starMapScene.rotation.x += deltaMove.y * 0.005;
+                    previousMousePosition = {
+                        x: e.touches[0].clientX,
+                        y: e.touches[0].clientY
+                    };
+                    e.preventDefault();
+                }
+            });
+            
             window.addEventListener('resize', () => {
                 const newWidth = starMapContainer.offsetWidth;
-                const newHeight = starMapContainer.offsetHeight;
-                starMapCamera.aspect = newWidth / newHeight;
+                starMapCamera.aspect = newWidth / height;
                 starMapCamera.updateProjectionMatrix();
-                starMapRenderer.setSize(newWidth, newHeight);
+                starMapRenderer.setSize(newWidth, height);
             });
         }
 
@@ -677,26 +854,15 @@
         // ===============================================
         let audioContext, analyser, microphone, stream;
         let isBlowing = false;
-        // The blow threshold is set to a low value for a light blow.
-        // You can adjust this value (e.g., 20-100) to change the sensitivity.
         const blowThreshold = 20;
         const candles = [];
 
         function createCandles() {
             const cake = document.querySelector('.cake');
             const candlePositions = [
-                {
-                    top: -20,
-                    left: '20%'
-                },
-                {
-                    top: -25,
-                    left: '50%'
-                },
-                {
-                    top: -20,
-                    left: '80%'
-                },
+                { top: -20, left: '20%' },
+                { top: -25, left: '50%' },
+                { top: -20, left: '80%' },
             ];
 
             candlePositions.forEach(pos => {
@@ -716,7 +882,6 @@
         createCandles();
 
         function blowOutCandles() {
-            // Function to blow out all candles and stop the logic
             isBlowing = true;
             document.getElementById('blow-message').textContent = "You blew out the candles! 🎉";
             candles.forEach(flame => {
@@ -728,7 +893,7 @@
                 stream.getTracks().forEach(track => track.stop());
             }
 
-            // Wait a moment then show the next button and hide the current buttons
+            // Show the next button
             setTimeout(() => {
                 document.getElementById('next-btn-5').classList.remove('hidden');
                 document.getElementById('start-blow-btn').classList.add('hidden');
@@ -805,49 +970,51 @@
                 "Your beautiful smile 😊",
                 "The way you make me feel safe 🤗",
                 "Your incredible strength 💪",
+                "The way you always support me 🙌",
+                "Your unique view of the world 🌍",
+                "Your unwavering love for me 🥰",
                 "Your sense of humor 😂",
                 "You are my sunshine ☀️",
                 "You make me a better person ✨",
                 "Every day with you is a gift 🎁",
+                "You are simply the best 👑",
+                "Your positive energy 🌟",
+                "Your caring nature 🤗",
+                "Your beautiful eyes 👀",
+                "Your amazing cooking skills 🍳",
+                "Your intelligence 🧠",
+                "Your passion for life 🔥",
+                "Your beautiful soul 💫",
+                "Your gentle touch ✋",
+                "Your wise advice 💡"
             ];
+        
             const container = document.getElementById('compliments-container');
-            container.innerHTML = '';
+            container.innerHTML = ''; // Clear previous ones
         
             compliments.forEach((complimentText, index) => {
                 const complimentBox = document.createElement('div');
                 complimentBox.className = 'floating-compliment';
                 complimentBox.textContent = complimentText;
-        
-                // Position the boxes in the middle of the screen
-                const xPosition = Math.random() * 60 + 20; // Position between 20% and 80%
-                const yPosition = Math.random() * 50 + 25; // Position between 25% and 75%
-        
+                
+                // Set initial state
                 gsap.set(complimentBox, {
-                    x: `${xPosition}vw`,
-                    y: `${yPosition}vh`,
-                    scale: 0,
                     opacity: 0,
-                    rotation: Math.random() * 360,
+                    scale: 0.8,
+                    y: 20
                 });
-        
+                
+                // Animate in
                 gsap.to(complimentBox, {
+                    opacity: 1,
                     scale: 1,
-                    opacity: 0.8,
-                    duration: 1,
-                    delay: index * 0.2,
-                    ease: "power2.out",
+                    y: 0,
+                    duration: 0.8,
+                    delay: index * 0.05,
+                    ease: "back.out(1.7)"
                 });
-        
-                // Hover animation
-                gsap.to(complimentBox, {
-                    y: `+=${Math.random() * 20 + 10}px`,
-                    duration: 2 + Math.random() * 2,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "sine.inOut",
-                    delay: Math.random() * 2,
-                });
-        
+                
+                // Add hover animation
                 container.appendChild(complimentBox);
             });
         }
@@ -861,25 +1028,26 @@
             updateProgressBar();
 
             if (stepNumber === 3) {
-                const complimentsContainer = document.getElementById('compliments-container');
-                complimentsContainer.style.opacity = 1;
-                complimentsContainer.style.display = 'block';
                 createFloatingCompliments();
-                
-                document.getElementById('next-btn-3').addEventListener('click', () => {
-                    complimentsContainer.style.opacity = 0;
-                    setTimeout(() => {
-                        complimentsContainer.style.display = 'none';
-                    }, 800);
-                }, { once: true });
-            } else {
-                const complimentsContainer = document.getElementById('compliments-container');
-                complimentsContainer.style.opacity = 0;
-                complimentsContainer.style.display = 'none';
             }
 
             if (stepNumber === 4 && !starMapScene) {
                 initStarMap();
+            }
+
+            if (stepNumber === 5) {
+                isBlowing = false;
+                candles.forEach(flame => flame.classList.remove('out'));
+                document.getElementById('blow-level').style.width = '0%';
+                document.getElementById('blow-message').textContent = '';
+                document.getElementById('next-btn-5').classList.add('hidden');
+                document.getElementById('start-blow-btn').classList.remove('hidden');
+                document.getElementById('manual-blow-btn').classList.remove('hidden');
+                
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    stream = null;
+                }
             }
 
             if (stepNumber === totalSteps) {
@@ -887,6 +1055,7 @@
             }
         }
 
+        // Navigation event listeners
         document.getElementById('start-btn').addEventListener('click', () => {
             currentStep = 2;
             showStep(currentStep);
@@ -908,11 +1077,10 @@
         });
 
         document.getElementById('start-blow-btn').addEventListener('click', () => {
-            document.getElementById('start-blow-btn').disabled = true; // Prevent multiple clicks
+            document.getElementById('start-blow-btn').disabled = true;
             startBlowingLogic();
         });
 
-        // New event listener for the manual blow button
         document.getElementById('manual-blow-btn').addEventListener('click', () => {
             blowOutCandles();
         });
