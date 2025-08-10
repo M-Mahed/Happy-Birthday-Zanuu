@@ -51,8 +51,7 @@
             height: 95%;
             max-height: 700px;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             text-align: center;
@@ -218,7 +217,6 @@
         /* Floating compliments styles */
         .floating-compliment {
             background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(5px);
             border-radius: 15px;
             padding: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -247,7 +245,6 @@
         
         #step3-header {
             background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -345,56 +342,6 @@
             transition: width 0.1s ease-out;
         }
         
-        /* Virtual Characters */
-        .character {
-            position: fixed;
-            z-index: 200;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            user-select: none;
-            font-size: 4rem;
-            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
-        }
-        
-        .character.boy {
-            bottom: 20px;
-            left: 20px;
-        }
-        
-        .character.girl {
-            bottom: 20px;
-            right: 20px;
-        }
-        
-        .character.waving {
-            animation: wave 2s infinite;
-        }
-        
-        .character.hugging {
-            animation: hug 1s ease;
-        }
-        
-        .character.kissing {
-            animation: kiss 1s ease;
-        }
-        
-        @keyframes wave {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(10deg); }
-            50% { transform: rotate(-10deg); }
-            75% { transform: rotate(10deg); }
-        }
-        
-        @keyframes hug {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        @keyframes kiss {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-        
         /* Music Controls */
         #music-control {
             position: fixed;
@@ -466,44 +413,6 @@
             z-index: -1;
         }
         
-        /* Zodiac Compatibility */
-        .zodiac-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 20px 0;
-        }
-        
-        .zodiac-sign {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            width: 130px;
-        }
-        
-        .zodiac-sign .emoji {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .compatibility-meter {
-            height: 20px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            margin: 20px auto;
-            overflow: hidden;
-            max-width: 300px;
-        }
-        
-        .compatibility-level {
-            height: 100%;
-            width: 95%;
-            background: linear-gradient(90deg, #ec4899, #f43f5e);
-            border-radius: 10px;
-        }
-        
         /* Promise Coupons */
         #coupons-container {
             display: flex;
@@ -563,6 +472,7 @@
                 max-height: none;
                 border-radius: 0;
                 padding: 15px;
+                background: rgba(255, 255, 255, 0.98);
             }
             
             #progress-container {
@@ -602,20 +512,6 @@
                 font-size: 0.95rem;
             }
             
-            .character {
-                font-size: 3rem;
-            }
-            
-            .character.boy {
-                bottom: 10px;
-                left: 10px;
-            }
-            
-            .character.girl {
-                bottom: 10px;
-                right: 10px;
-            }
-            
             .love-note {
                 padding: 12px;
                 font-size: 1rem;
@@ -652,16 +548,6 @@
             .floating-compliment {
                 padding: 10px;
                 font-size: 0.8rem;
-            }
-            
-            .character {
-                font-size: 2.5rem;
-            }
-            
-            .zodiac-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
             }
         }
         
@@ -710,6 +596,25 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+        
+        /* Floating hearts for mobile */
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            z-index: 5;
+            animation: float 8s infinite ease-in-out;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -722,10 +627,6 @@
         </div>
 
         <div id="message-box" class="message-box"></div>
-        
-        <!-- Virtual Characters -->
-        <div class="character boy waving" id="character-boy">👦</div>
-        <div class="character girl waving" id="character-girl">👧</div>
         
         <!-- Music Control -->
         <div id="music-control">🎵</div>
@@ -785,7 +686,7 @@
                 </div>
             </div>
             
-            <!-- New Step: Love Wall -->
+            <!-- Love Wall -->
             <div class="step" id="step5">
                 <div class="emoji">💌</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">Our Love Wall</h2>
@@ -796,51 +697,11 @@
                 <div id="love-wall"></div>
                 
                 <div class="step-footer">
-                    <button class="btn" id="next-btn-5">Zodiac Compatibility ✨</button>
-                </div>
-            </div>
-            
-            <!-- New Step: Zodiac Compatibility -->
-            <div class="step" id="step6">
-                <div class="emoji">🌟</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">Our Zodiac Connection</h2>
-                <p class="text-base text-gray-700 mb-4 md:text-lg">
-                    Pisces (March 4) and Leo (August 11) - A match made in the stars!
-                </p>
-                
-                <div class="zodiac-container">
-                    <div class="zodiac-sign">
-                        <div class="emoji">♓</div>
-                        <h3>Pisces</h3>
-                        <p>March 4</p>
-                    </div>
-                    
-                    <div class="emoji">❤️</div>
-                    
-                    <div class="zodiac-sign">
-                        <div class="emoji">♌</div>
-                        <h3>Leo</h3>
-                        <p>August 11</p>
-                    </div>
-                </div>
-                
-                <div class="compatibility-meter">
-                    <div class="compatibility-level"></div>
-                </div>
-                <p class="text-lg font-semibold mb-4">95% Compatibility</p>
-                
-                <p class="text-base text-gray-700 mb-4 md:text-lg">
-                    The compassionate Pisces and the passionate Leo create a magical connection. 
-                    Your empathy complements her strength, while her warmth protects your sensitive soul. 
-                    Together, you form a bond that's both inspiring and deeply loving.
-                </p>
-                
-                <div class="step-footer">
-                    <button class="btn" id="next-btn-6">Make a Wish! 🎂</button>
+                    <button class="btn" id="next-btn-5">Make a Wish! 🎂</button>
                 </div>
             </div>
 
-            <div class="step" id="step7">
+            <div class="step" id="step6">
                 <div class="emoji">🕯️</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">Make a Wish!</h2>
                 <p class="text-base text-gray-700 mb-4 md:text-lg">
@@ -858,11 +719,11 @@
                 <div class="flex flex-col items-center w-full mt-4">
                     <button class="btn w-full max-w-sm" id="start-blow-btn">Start Blowing 🎙️</button>
                     <button class="btn btn-small" id="manual-blow-btn">Click to Blow</button>
-                    <button class="btn hidden w-full max-w-sm" id="next-btn-7">My Wish For You 🙏</button>
+                    <button class="btn hidden w-full max-w-sm" id="next-btn-6">My Wish For You 🙏</button>
                 </div>
             </div>
 
-            <div class="step" id="step8">
+            <div class="step" id="step7">
                 <div class="emoji">🥳</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">Birthday Wish For You</h2>
                 <div class="text-base text-gray-700 mb-4 md:text-lg overflow-y-auto flex-grow">
@@ -891,12 +752,12 @@
                     Happy Birthday, my zanuuu! ❤️
                 </p>
                 <div class="step-footer">
-                    <button class="btn" id="next-btn-8">Your Gift Coupons 🎁</button>
+                    <button class="btn" id="next-btn-7">Your Gift Coupons 🎁</button>
                 </div>
             </div>
             
-            <!-- New Step: Promise Coupons -->
-            <div class="step" id="step9">
+            <!-- Promise Coupons -->
+            <div class="step" id="step8">
                 <div class="emoji">🎁</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">Promise Coupons</h2>
                 <p class="text-base text-gray-700 mb-4 md:text-lg">
@@ -922,6 +783,27 @@
             setTimeout(() => {
                 messageBox.classList.remove('visible');
             }, duration);
+        }
+
+        // Create floating hearts for mobile
+        function createFloatingHearts() {
+            const heartEmojis = ['❤️', '💖', '💗', '💓', '💞'];
+            for (let i = 0; i < 12; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                
+                // Random position
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.fontSize = `${Math.random() * 2 + 1}rem`;
+                
+                // Random animation duration
+                const duration = Math.random() * 10 + 10;
+                heart.style.animationDuration = `${duration}s`;
+                heart.style.animationDelay = `${Math.random() * 5}s`;
+                
+                document.getElementById('app').appendChild(heart);
+            }
         }
 
         // Three.js Heart Background
@@ -1217,7 +1099,7 @@
 
             // Show the next button
             setTimeout(() => {
-                document.getElementById('next-btn-7').classList.remove('hidden');
+                document.getElementById('next-btn-6').classList.remove('hidden');
                 document.getElementById('start-blow-btn').classList.add('hidden');
                 document.getElementById('manual-blow-btn').classList.add('hidden');
             }, 1000);
@@ -1270,59 +1152,6 @@
                     blowMessage.textContent = "Microphone access denied. Please allow permission to blow out the candles.";
                     console.error("Error accessing microphone:", err);
                 });
-        }
-
-        // ===============================================
-        // Character Interactions
-        // ===============================================
-        function initCharacterInteractions() {
-            const boy = document.getElementById('character-boy');
-            const girl = document.getElementById('character-girl');
-            
-            // Initial waving animation
-            boy.classList.add('waving');
-            girl.classList.add('waving');
-            
-            // Interaction logic
-            function interact(type) {
-                // Play interaction sound
-                const sound = new Howl({
-                    src: [type === 'kiss' ? 
-                          'https://assets.mixkit.co/sfx/preview/mixkit-kiss-sound-1490.mp3' : 
-                          'https://assets.mixkit.co/sfx/preview/mixkit-little-kiss-laugh-1179.mp3'],
-                    volume: 0.5
-                });
-                sound.play();
-                
-                // Animate characters
-                boy.classList.remove('waving', 'hugging', 'kissing');
-                girl.classList.remove('waving', 'hugging', 'kissing');
-                
-                boy.classList.add(type);
-                girl.classList.add(type);
-                
-                // Return to waving after animation
-                setTimeout(() => {
-                    boy.classList.remove(type);
-                    girl.classList.remove(type);
-                    boy.classList.add('waving');
-                    girl.classList.add('waving');
-                }, 1000);
-            }
-            
-            // Add event listeners
-            boy.addEventListener('click', () => interact('hug'));
-            girl.addEventListener('click', () => interact('kiss'));
-            
-            // Touch events for mobile
-            boy.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                interact('hug');
-            });
-            girl.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                interact('kiss');
-            });
         }
         
         // ===============================================
@@ -1440,7 +1269,7 @@
         // Step Navigation and Button Event Listeners
         // ===============================================
         let currentStep = 1;
-        const totalSteps = 9;
+        const totalSteps = 8;
 
         function updateProgressBar() {
             const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
@@ -1525,16 +1354,16 @@
                 createLoveWall();
             }
             
-            if (stepNumber === 9) {
+            if (stepNumber === 8) {
                 createPromiseCoupons();
             }
 
-            if (stepNumber === 7) {
+            if (stepNumber === 6) {
                 isBlowing = false;
                 candles.forEach(flame => flame.classList.remove('out'));
                 document.getElementById('blow-level').style.width = '0%';
                 document.getElementById('blow-message').textContent = '';
-                document.getElementById('next-btn-7').classList.add('hidden');
+                document.getElementById('next-btn-6').classList.add('hidden');
                 document.getElementById('start-blow-btn').classList.remove('hidden');
                 document.getElementById('manual-blow-btn').classList.remove('hidden');
                 
@@ -1574,11 +1403,6 @@
             currentStep = 6;
             showStep(currentStep);
         });
-        
-        document.getElementById('next-btn-6').addEventListener('click', () => {
-            currentStep = 7;
-            showStep(currentStep);
-        });
 
         document.getElementById('start-blow-btn').addEventListener('click', () => {
             document.getElementById('start-blow-btn').disabled = true;
@@ -1589,16 +1413,16 @@
             blowOutCandles();
         });
 
-        document.getElementById('next-btn-7').addEventListener('click', () => {
+        document.getElementById('next-btn-6').addEventListener('click', () => {
             if (stream) {
                 stream.getTracks().forEach(track => track.stop());
             }
-            currentStep = 8;
+            currentStep = 7;
             showStep(currentStep);
         });
         
-        document.getElementById('next-btn-8').addEventListener('click', () => {
-            currentStep = 9;
+        document.getElementById('next-btn-7').addEventListener('click', () => {
+            currentStep = 8;
             showStep(currentStep);
         });
 
@@ -1665,8 +1489,8 @@
 
         // Initialize everything
         updateProgressBar();
-        initCharacterInteractions();
         initMusicPlayer();
+        createFloatingHearts();
     </script>
 </body>
 
