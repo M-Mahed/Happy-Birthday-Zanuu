@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,27 +9,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
         }
         
         html, body {
             height: 100%;
             margin: 0;
             overflow: hidden;
+            font-family: 'Inter', sans-serif;
         }
         
         body {
-            font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #f9a8d4, #f3e8ff);
+            background-attachment: fixed;
+            overflow-y: auto;
         }
 
         #app {
             position: relative;
             width: 100%;
-            height: 100%;
+            min-height: 100%;
             overflow: hidden;
         }
 
@@ -38,25 +41,25 @@
             position: relative;
             z-index: 10;
             width: 100%;
-            height: 100%;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            box-sizing: border-box;
+            padding-top: 60px;
+            padding-bottom: 40px;
         }
 
         .step {
-            position: absolute;
+            position: relative;
             width: 95%;
             max-width: 800px;
-            height: 95%;
-            max-height: 700px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.95);
+            min-height: 85vh;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.96);
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             text-align: center;
             opacity: 0;
             transform: translateY(20px);
@@ -79,7 +82,7 @@
             background: linear-gradient(135deg, #ec4899, #f43f5e);
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 14px 28px;
             border-radius: 50px;
             font-weight: 600;
             cursor: pointer;
@@ -93,6 +96,7 @@
             justify-content: center;
             gap: 8px;
             z-index: 100;
+            font-size: 1.05rem;
         }
 
         .btn:hover {
@@ -106,8 +110,8 @@
 
         .btn-small {
             background: #f87171;
-            padding: 8px 16px;
-            font-size: 0.875rem;
+            padding: 10px 20px;
+            font-size: 0.95rem;
             max-width: 200px;
             margin-top: 10px;
             box-shadow: 0 2px 8px rgba(248, 113, 113, 0.3);
@@ -137,14 +141,15 @@
         }
 
         .emoji {
-            font-size: 3rem;
-            margin-bottom: 10px;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
             display: inline-block;
+            animation: float 4s ease-in-out infinite;
         }
 
         #progress-container {
             position: fixed;
-            top: 20px;
+            top: 15px;
             left: 50%;
             transform: translateX(-50%);
             width: 80%;
@@ -210,20 +215,20 @@
             flex: 1;
             overflow-y: auto;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            grid-gap: 15px;
-            padding: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-gap: 18px;
+            padding: 20px;
             width: 100%;
-            margin: 10px 0;
+            margin: 15px 0;
         }
 
         /* Floating compliments styles */
         .floating-compliment {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.8);
             border-radius: 15px;
-            padding: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            font-size: 0.9rem;
+            padding: 18px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            font-size: 0.95rem;
             color: #333;
             display: flex;
             justify-content: center;
@@ -231,6 +236,7 @@
             text-align: center;
             animation: hover 3s infinite alternate ease-in-out;
             transition: transform 0.3s ease;
+            border: 1px solid rgba(236, 72, 153, 0.1);
         }
         
         .floating-compliment:hover {
@@ -242,45 +248,46 @@
                 transform: translateY(0);
             }
             100% {
-                transform: translateY(-5px);
+                transform: translateY(-8px);
             }
         }
         
         #step3-header {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.8);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 25px;
             width: 100%;
             text-align: center;
             z-index: 10;
+            margin-bottom: 15px;
         }
 
         /* Blow out candles section styles */
         #candles-container {
             position: relative;
             width: 100%;
-            height: 150px;
+            height: 180px;
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .cake {
             background: #d89669;
-            width: 120px;
-            height: 60px;
+            width: 150px;
+            height: 70px;
             border-radius: 10px 10px 0 0;
             position: relative;
         }
 
         .icing {
             background: #fdf6e3;
-            width: 130px;
-            height: 10px;
+            width: 160px;
+            height: 15px;
             position: absolute;
-            top: -10px;
+            top: -15px;
             left: -5px;
             border-radius: 50%;
             box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.1);
@@ -288,21 +295,21 @@
 
         .candle {
             position: absolute;
-            width: 8px;
-            height: 30px;
+            width: 10px;
+            height: 35px;
             background: #fdf6e3;
             border-radius: 2px;
         }
 
         .flame {
             position: absolute;
-            top: -15px;
+            top: -20px;
             left: -1px;
-            width: 10px;
-            height: 20px;
+            width: 12px;
+            height: 25px;
             background: linear-gradient(to top, #ffcc33, #e65200);
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            box-shadow: 0 0 10px 5px rgba(255, 153, 0, 0.7);
+            box-shadow: 0 0 12px 6px rgba(255, 153, 0, 0.7);
             animation: flicker 1s infinite alternate;
         }
 
@@ -348,9 +355,9 @@
         /* Love Wall */
         #love-wall {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            grid-gap: 20px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            grid-gap: 25px;
+            padding: 25px;
             width: 100%;
             flex-grow: 1;
             overflow-y: auto;
@@ -358,16 +365,16 @@
         
         .love-note {
             background: linear-gradient(135deg, #fdf6e3, #fef9c3);
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            font-family: 'Pacifico', cursive;
-            font-size: 1.1rem;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.25rem;
             color: #333;
             transform: rotate(-2deg);
             transition: all 0.3s ease;
             position: relative;
-            min-height: 120px;
+            min-height: 130px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -403,18 +410,18 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
-            padding: 20px;
+            gap: 25px;
+            padding: 25px;
             width: 100%;
             overflow-y: auto;
         }
         
         .coupon {
             background: linear-gradient(135deg, #fdf6e3, #fef9c3);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            width: 220px;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            width: 240px;
             text-align: center;
             border: 2px dashed #f87171;
             position: relative;
@@ -433,20 +440,117 @@
         
         .coupon-title {
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 15px;
             color: #ec4899;
             border-bottom: 2px dashed #f87171;
             padding-bottom: 10px;
+            font-family: 'Pacifico', cursive;
         }
         
         .coupon-code {
             font-family: monospace;
             background: rgba(0, 0, 0, 0.05);
-            padding: 5px 10px;
-            border-radius: 5px;
-            margin-top: 15px;
+            padding: 8px 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 1rem;
+        }
+        
+        /* Step footer */
+        .step-footer {
+            width: 100%;
+            padding-top: 20px;
+            margin-top: auto;
+        }
+        
+        /* Hide scrollbar for cleaner look */
+        #compliments-container::-webkit-scrollbar,
+        #love-wall::-webkit-scrollbar,
+        #coupons-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        #compliments-container,
+        #love-wall,
+        #coupons-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Background pattern */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ec4899' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.15;
+            z-index: -1;
+        }
+        
+        /* Microphone button */
+        .mic-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ec4899, #f43f5e);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 20;
+            border: 2px solid white;
+            transition: all 0.3s ease;
+        }
+        
+        .mic-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .mic-btn.listening {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(236, 72, 153, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(236, 72, 153, 0);
+            }
+        }
+        
+        /* Blow instructions */
+        .blow-instructions {
+            position: absolute;
+            top: 70px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 20px;
             font-size: 0.9rem;
+            max-width: 200px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .blow-instructions.show {
+            opacity: 1;
+            pointer-events: all;
         }
         
         /* Mobile optimizations */
@@ -456,8 +560,14 @@
                 height: 100%;
                 max-height: none;
                 border-radius: 0;
-                padding: 15px;
+                padding: 20px;
                 background: rgba(255, 255, 255, 0.98);
+                min-height: 90vh;
+            }
+            
+            #content {
+                padding-top: 50px;
+                padding-bottom: 30px;
             }
             
             #progress-container {
@@ -466,7 +576,7 @@
             }
             
             .emoji {
-                font-size: 2.5rem;
+                font-size: 3rem;
             }
             
             h1, h2 {
@@ -482,9 +592,73 @@
             }
             
             #compliments-container {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                grid-gap: 12px;
+                padding: 12px;
+            }
+            
+            .floating-compliment {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            
+            .btn {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+            
+            .love-note {
+                padding: 15px;
+                font-size: 1.1rem;
+            }
+            
+            .coupon {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .cake {
+                width: 130px;
+                height: 65px;
+            }
+            
+            .icing {
+                width: 140px;
+            }
+            
+            .mic-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+            
+            .blow-instructions {
+                top: 60px;
+                font-size: 0.8rem;
+                max-width: 160px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .emoji {
+                font-size: 2.5rem;
+            }
+            
+            h1, h2 {
+                font-size: 1.7rem !important;
+            }
+            
+            p {
+                font-size: 0.95rem !important;
+            }
+            
+            #star-map-canvas {
+                height: 220px;
+            }
+            
+            #compliments-container {
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
                 grid-gap: 10px;
-                padding: 10px;
             }
             
             .floating-compliment {
@@ -492,112 +666,20 @@
                 font-size: 0.85rem;
             }
             
-            .btn {
-                padding: 10px 20px;
-                font-size: 0.95rem;
-            }
-            
             .love-note {
-                padding: 12px;
                 font-size: 1rem;
             }
             
-            .coupon {
-                width: 100%;
-                max-width: 280px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .emoji {
-                font-size: 2rem;
+            .mic-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
             }
             
-            h1, h2 {
-                font-size: 1.6rem !important;
-            }
-            
-            p {
-                font-size: 0.9rem !important;
-            }
-            
-            #star-map-canvas {
-                height: 200px;
-            }
-            
-            #compliments-container {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-                grid-gap: 8px;
-            }
-            
-            .floating-compliment {
-                padding: 10px;
-                font-size: 0.8rem;
-            }
-        }
-        
-        /* Navigation controls */
-        .nav-controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-            width: 100%;
-        }
-        
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.7);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.9);
-            transform: translateY(-2px);
-        }
-        
-        /* Step footer */
-        .step-footer {
-            width: 100%;
-            padding-top: 15px;
-            margin-top: auto;
-        }
-        
-        /* Hide scrollbar for cleaner look */
-        #compliments-container::-webkit-scrollbar {
-            display: none;
-        }
-        
-        #compliments-container {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        
-        /* Floating hearts for mobile */
-        .floating-heart {
-            position: absolute;
-            font-size: 2rem;
-            z-index: 5;
-            animation: float 8s infinite ease-in-out;
-            opacity: 0.7;
-            pointer-events: none;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
+            .blow-instructions {
+                top: 55px;
+                font-size: 0.75rem;
+                max-width: 140px;
             }
         }
     </style>
@@ -606,6 +688,7 @@
 <body>
     <div id="app">
         <div id="canvas-container"></div>
+        <div class="bg-pattern"></div>
 
         <div id="progress-container">
             <div id="progress-bar"></div>
@@ -625,10 +708,13 @@
 
             <div class="step" id="step2">
                 <div class="emoji">🎂</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">Happy Birthday!</h2>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">Happy Birthday, My Love!</h2>
                 <p class="text-base text-gray-700 mb-6 md:text-lg">
                     On your special day, I want you to know how amazing you are. Your smile brightens my world, your
                     laughter is my favorite melody, and your presence makes every moment magical.
+                </p>
+                <p class="text-base text-gray-700 mb-6 md:text-lg">
+                    Even though we're apart today, my heart is right there with you, celebrating every beautiful thing about you.
                 </p>
                 <div class="step-footer">
                     <button class="btn" id="next-btn-2">A few words for you 💖</button>
@@ -638,16 +724,16 @@
             <div class="step" id="step3">
                 <div id="step3-header">
                     <div class="emoji">👑</div>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-2 text-gradient">Some words for moi Zanuu</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2 text-gradient">Why You're So Special</h2>
                     <p class="text-base text-gray-700 mb-4 md:text-lg">
-                        A few of the countless reasons why you are so special to me...
+                        A few of the countless reasons why you mean everything to me...
                     </p>
                 </div>
                 
                 <div id="compliments-container"></div>
                 
                 <div class="step-footer">
-                    <button class="btn" id="next-btn-3">A Glimpse into the Sky 🔭</button>
+                    <button class="btn" id="next-btn-3">Our Special Sky 🔭</button>
                 </div>
             </div>
 
@@ -655,7 +741,7 @@
                 <div class="emoji">🌌</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">The Stars of Our Beginning</h2>
                 <p class="text-base text-gray-700 mb-4 md:text-lg">
-                    This is what the night sky looked like on <strong>June 10th</strong>, the day you came into my life. ✨
+                    This is what the night sky looked like on <strong class="text-pink-600">June 10th</strong>, the day you came into my life. ✨
                 </p>
                 <div id="star-map-container" class="w-full relative rounded-xl mb-4">
                     <canvas id="star-map-canvas" class="w-full"></canvas>
@@ -694,6 +780,14 @@
                         <div class="icing"></div>
                     </div>
                 </div>
+                
+                <!-- Microphone button and instructions -->
+                <div class="mic-btn" id="mic-btn">🎤</div>
+                <div class="blow-instructions" id="blow-instructions">
+                    <strong>Blow into your microphone</strong> to blow out the candles!
+                    <div class="mt-2 text-xs text-gray-500">(Or use the button below)</div>
+                </div>
+                
                 <div class="flex flex-col items-center w-full mt-4">
                     <button class="btn" id="manual-blow-btn">Blow Out Candles</button>
                     <button class="btn hidden w-full max-w-sm" id="next-btn-6">My Wish For You 🙏</button>
@@ -745,7 +839,7 @@
                 
                 <div class="step-footer">
                     <button class="btn" id="confetti-btn">Celebrate! 🎉</button>
-                    <p class="mt-4 text-sm text-gray-500">Made with ❤️ just for you</p>
+                    <p class="mt-6 text-sm text-gray-500">Made with ❤️ just for you, Zanuuu</p>
                 </div>
             </div>
         </div>
@@ -824,12 +918,9 @@
             const scale = Math.random() * 0.8 + 0.5;
             heart.scale.set(scale, scale, scale);
 
-            // Random rotation
-            heart.rotation.x = Math.random() * Math.PI;
-            heart.rotation.y = Math.random() * Math.PI;
-
             // Store animation properties
             heart.userData = {
+                scale: scale,
                 speedX: Math.random() * 0.02 - 0.01,
                 speedY: Math.random() * 0.02 - 0.01,
                 speedZ: Math.random() * 0.02 - 0.01,
@@ -863,6 +954,14 @@
                 heart.position.z = heart.userData.originalZ + Math.sin(time * heart.userData.speedZ * 10) * heart.userData.floatDistance;
                 heart.rotation.x += heart.userData.rotationSpeedX;
                 heart.rotation.y += heart.userData.rotationSpeedY;
+                
+                // Pulsing effect
+                const pulse = Math.sin(time * 2) * 0.1 + 1;
+                heart.scale.set(
+                    heart.userData.scale * pulse, 
+                    heart.userData.scale * pulse, 
+                    heart.userData.scale * pulse
+                );
             });
             renderer.render(scene, camera);
         }
@@ -889,7 +988,7 @@
             const starMapCanvas = document.getElementById('star-map-canvas');
 
             const width = starMapContainer.offsetWidth;
-            const height = 300; // Fixed height for mobile
+            const height = Math.min(300, window.innerWidth * 0.6); // Responsive height
 
             starMapRenderer = new THREE.WebGLRenderer({
                 canvas: starMapCanvas,
@@ -1003,9 +1102,10 @@
             
             window.addEventListener('resize', () => {
                 const newWidth = starMapContainer.offsetWidth;
-                starMapCamera.aspect = newWidth / height;
+                const newHeight = Math.min(300, window.innerWidth * 0.6); // Responsive height
+                starMapCamera.aspect = newWidth / newHeight;
                 starMapCamera.updateProjectionMatrix();
-                starMapRenderer.setSize(newWidth, height);
+                starMapRenderer.setSize(newWidth, newHeight);
             });
         }
 
@@ -1016,10 +1116,12 @@
 
         function createCandles() {
             const cake = document.querySelector('.cake');
+            cake.innerHTML = '<div class="icing"></div>'; // Reset cake
+            
             const candlePositions = [
-                { top: -20, left: '20%' },
-                { top: -25, left: '50%' },
-                { top: -20, left: '80%' },
+                { top: -25, left: '20%' },
+                { top: -30, left: '50%' },
+                { top: -25, left: '80%' },
             ];
 
             candlePositions.forEach(pos => {
@@ -1047,7 +1149,96 @@
             setTimeout(() => {
                 document.getElementById('next-btn-6').classList.remove('hidden');
                 document.getElementById('manual-blow-btn').classList.add('hidden');
+                
+                // Add confetti effect
+                confetti({
+                    particleCount: 30,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#ff0000', '#ff69b4', '#ff1493']
+                });
             }, 1000);
+        }
+        
+        // ===============================================
+        // Microphone Blowing Logic
+        // ===============================================
+        let audioContext;
+        let analyser;
+        let microphone;
+        let isListening = false;
+        let blowStartTime;
+        let blowDuration = 0;
+
+        async function setupMicrophone() {
+            try {
+                // Request microphone access
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                
+                // Create audio context
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 256;
+                
+                microphone = audioContext.createMediaStreamSource(stream);
+                microphone.connect(analyser);
+                
+                return true;
+            } catch (err) {
+                console.error('Error accessing microphone:', err);
+                showMessage("Microphone access denied. Please use the button below.", 5000);
+                return false;
+            }
+        }
+
+        function startBlowDetection() {
+            if (!analyser) return;
+            
+            isListening = true;
+            document.getElementById('mic-btn').classList.add('listening');
+            document.getElementById('blow-instructions').classList.add('show');
+            
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            blowStartTime = Date.now();
+            blowDuration = 0;
+            
+            const detectBlow = () => {
+                if (!isListening) return;
+                
+                analyser.getByteFrequencyData(dataArray);
+                
+                // Calculate average volume
+                let sum = 0;
+                for (let i = 0; i < bufferLength; i++) {
+                    sum += dataArray[i];
+                }
+                const average = sum / bufferLength;
+                
+                // Check if volume exceeds threshold
+                if (average > 40) {
+                    blowDuration = Date.now() - blowStartTime;
+                    
+                    // If blowing for more than 500ms, blow out candles
+                    if (blowDuration > 500) {
+                        stopBlowDetection();
+                        blowOutCandles();
+                        showMessage("You did it! Candles blown out! 🎉", 3000);
+                    }
+                } else {
+                    blowStartTime = Date.now();
+                }
+                
+                requestAnimationFrame(detectBlow);
+            };
+            
+            detectBlow();
+        }
+
+        function stopBlowDetection() {
+            isListening = false;
+            document.getElementById('mic-btn').classList.remove('listening');
+            document.getElementById('blow-instructions').classList.remove('show');
         }
         
         // ===============================================
@@ -1069,9 +1260,14 @@
                 "Your laugh is my favorite sound 😄",
                 "You're my safe place 🏠",
                 "I love your beautiful soul 💫",
-                "You make everything better 🌈"
+                "You make everything better 🌈",
+                "You're the best thing in my life 🌟",
+                "I'm grateful for you every day 🙏",
+                "You're my dream come true 💭",
+                "My heart belongs to you 💘"
             ];
             
+            loveWall.innerHTML = '';
             messages.forEach(message => {
                 const note = document.createElement('div');
                 note.className = 'love-note';
@@ -1105,9 +1301,14 @@
                 {
                     title: "Personalized Love Letter",
                     description: "Redeem for a handwritten love letter expressing my feelings."
+                },
+                {
+                    title: "Your Choice Dinner",
+                    description: "I'll cook your favorite meal when we're together next time."
                 }
             ];
             
+            couponsContainer.innerHTML = '';
             coupons.forEach((coupon, index) => {
                 const couponDiv = document.createElement('div');
                 couponDiv.className = 'coupon';
@@ -1215,9 +1416,10 @@
             }
 
             if (stepNumber === 6) {
-                candles.forEach(flame => flame.classList.remove('out'));
+                createCandles();
                 document.getElementById('next-btn-6').classList.add('hidden');
                 document.getElementById('manual-blow-btn').classList.remove('hidden');
+                stopBlowDetection();
             }
 
             if (stepNumber === totalSteps) {
@@ -1263,6 +1465,21 @@
         document.getElementById('next-btn-7').addEventListener('click', () => {
             currentStep = 8;
             showStep(currentStep);
+        });
+
+        // Microphone button
+        document.getElementById('mic-btn').addEventListener('click', async () => {
+            if (isListening) {
+                stopBlowDetection();
+                return;
+            }
+            
+            if (!audioContext) {
+                const micSuccess = await setupMicrophone();
+                if (!micSuccess) return;
+            }
+            
+            startBlowDetection();
         });
 
         // Confetti button
@@ -1311,6 +1528,8 @@
                     colors: ['#ff0000', '#ff69b4']
                 });
             }, 600);
+            
+            showMessage("Happy Birthday Zanuuu! 🎉", 3000);
         });
 
         // Initialize everything
